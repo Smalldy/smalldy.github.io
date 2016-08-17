@@ -1,0 +1,716 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="百度云,图床," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Smalldy 's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="正文郁闷的图床在hexo环境下搭建的博客,需要使用markdown进行博文的创作,令人郁闷的是,插入图片需要”图床”这种东西,说白了就是需要将图片上传到网络,你应该持有一个直接指向该图片的链接,对于我这样一个屌丝穷学生来说,这显然不是一个好消息,如此一来,就需要运用”智慧”解决这个问题了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图床(一):使用百度云作免费图床">
+<meta property="og:url" content="http://smalldy.coding.me/2016/08/09/图床(一)使用百度云作免费图床/index.html">
+<meta property="og:site_name" content="Smalldy 's blog">
+<meta property="og:description" content="正文郁闷的图床在hexo环境下搭建的博客,需要使用markdown进行博文的创作,令人郁闷的是,插入图片需要”图床”这种东西,说白了就是需要将图片上传到网络,你应该持有一个直接指向该图片的链接,对于我这样一个屌丝穷学生来说,这显然不是一个好消息,如此一来,就需要运用”智慧”解决这个问题了">
+<meta property="og:image" content="http://thumbnail0.baidupcs.com/thumbnail/ac757fc97496845590defcbf9111140b?fid=2651461518-250528-597454780229909&time=1470722400&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Pf6bAxdjA8LAU0Logc7vrxXD2b0%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5139637490330448788&dp-callid=0&size=c10000_u10000&quality=90">
+<meta property="og:image" content="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg">
+<meta property="og:image" content="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg">
+<meta property="og:image" content="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg">
+<meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160811/09/1833312482016081109541405.jpg?960x540_120">
+<meta property="og:updated_time" content="2016-08-11T02:36:50.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图床(一):使用百度云作免费图床">
+<meta name="twitter:description" content="正文郁闷的图床在hexo环境下搭建的博客,需要使用markdown进行博文的创作,令人郁闷的是,插入图片需要”图床”这种东西,说白了就是需要将图片上传到网络,你应该持有一个直接指向该图片的链接,对于我这样一个屌丝穷学生来说,这显然不是一个好消息,如此一来,就需要运用”智慧”解决这个问题了">
+<meta name="twitter:image" content="http://thumbnail0.baidupcs.com/thumbnail/ac757fc97496845590defcbf9111140b?fid=2651461518-250528-597454780229909&time=1470722400&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Pf6bAxdjA8LAU0Logc7vrxXD2b0%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5139637490330448788&dp-callid=0&size=c10000_u10000&quality=90">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://smalldy.coding.me/2016/08/09/图床(一)使用百度云作免费图床/"/>
+
+  <title> 图床(一):使用百度云作免费图床 | Smalldy 's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6e0a0c8bf52bc0c329169df8b962fb68";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Smalldy 's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">技术宅拯救世界</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                图床(一):使用百度云作免费图床
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-09T13:53:28+08:00" content="2016-08-09">
+              2016-08-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/博客搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">博客搭建</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/09/图床(一)使用百度云作免费图床/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/09/图床(一)使用百度云作免费图床/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="郁闷的图床"><a href="#郁闷的图床" class="headerlink" title="郁闷的图床"></a>郁闷的图床</h3><p>在hexo环境下搭建的博客,需要使用markdown进行博文的创作,令人郁闷的是,插入图片需要”图床”这种东西,说白了就是需要将图片上传到网络,你应该持有一个直接指向该图片的链接,对于我这样一个屌丝穷学生来说,这显然不是一个好消息,如此一来,就需要运用”智慧”解决这个问题了</p>
+<a id="more"></a>
+<h3 id="超大空间"><a href="#超大空间" class="headerlink" title="超大空间!"></a>超大空间!</h3><p>说道存储空间,就不得不提百度啊360啊这些网盘了,如何利用这么容易到手的资源呢?</p>
+<h3 id="我们的目标是链接"><a href="#我们的目标是链接" class="headerlink" title="我们的目标是链接!"></a>我们的目标是链接!</h3><p>链接的话,不免想到的就是分享这个功能了,得到下载按钮的链接,说不定可以成功!事实证明我还是太年轻QAQ,这个下载按钮的链接是…javascript::void(0);</p>
+<p>GG!</p>
+<h3 id="卷土重来"><a href="#卷土重来" class="headerlink" title="卷土重来"></a>卷土重来</h3><p>这个智障的设置对我等网页小白来说无异于晴天霹雳,不行老夫得换个思路,什么分享什么的,根本不是关键,打开图片,盯了许久之后,一个#滑稽浮现到了我的脸上,嘿嘿嘿..你猜我看到了什么?<br><img src="http://thumbnail0.baidupcs.com/thumbnail/ac757fc97496845590defcbf9111140b?fid=2651461518-250528-597454780229909&amp;time=1470722400&amp;rt=pr&amp;sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Pf6bAxdjA8LAU0Logc7vrxXD2b0%3d&amp;expires=8h&amp;chkbd=0&amp;chkv=0&amp;dp-logid=5139637490330448788&amp;dp-callid=0&amp;size=c10000_u10000&amp;quality=90" alt="神奇的按钮"><br>我看到了这个拯救世界的按钮!!<br>但是,不要试图右键得到链接,你只需要轻轻的点击一下,在新的标签页上,在那个精致的地址栏中,就可以看到可爱的地址了</p>
+<p>此时我只想发出几个滑稽</p>
+<p><img src="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg" alt="滑稽"><br><img src="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg" alt="滑稽"><br><img src="http://g.hiphotos.baidu.com/baike/w%3D268/sign=1e68cddb36adcbef0134790094ae2e0e/8d5494eef01f3a29e33f21d19e25bc315c607c3e.jpg" alt="滑稽"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>什么?这个滑稽的链接是怎么来的?–百度相册,点开,右键…..</p>
+<h3 id="吃翔一样的后记"><a href="#吃翔一样的后记" class="headerlink" title="吃翔一样的后记"></a>吃翔一样的后记</h3><p>这一段是我在一天以后才添加的,可以见到这篇文章的凄惨模样,虽然说网上还流传着百度云永久外链的传说,但是我已近不准备尝试了,我看到了新的目标,下面这张图,要是挂了,我直播..还是算了QAQ</p>
+<p><img src="http://img18.poco.cn/mypoco/myphoto/20160811/09/1833312482016081109541405.jpg?960x540_120" alt="不会挂掉的图片!"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/百度云/" rel="tag">#百度云</a>
+          
+            <a href="/tags/图床/" rel="tag">#图床</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/09/hexo-github-搭建博客/" rel="next" title="hexo + github 搭建博客">
+                <i class="fa fa-chevron-left"></i> hexo + github 搭建博客
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/11/图床(二)新的尝试/" rel="prev" title="图床(二):新的尝试">
+                图床(二):新的尝试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/09/图床(一)使用百度云作免费图床/"
+           data-title="图床(一):使用百度云作免费图床" data-url="http://smalldy.coding.me/2016/08/09/图床(一)使用百度云作免费图床/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Smalldy" />
+          <p class="site-author-name" itemprop="name">Smalldy</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.josephcz.win/" title="Joseph's blog" target="_blank">Joseph's blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#郁闷的图床"><span class="nav-number">1.1.</span> <span class="nav-text">郁闷的图床</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超大空间"><span class="nav-number">1.2.</span> <span class="nav-text">超大空间!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我们的目标是链接"><span class="nav-number">1.3.</span> <span class="nav-text">我们的目标是链接!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷土重来"><span class="nav-number">1.4.</span> <span class="nav-text">卷土重来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.5.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#吃翔一样的后记"><span class="nav-number">1.6.</span> <span class="nav-text">吃翔一样的后记</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Smalldy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smalldy"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
