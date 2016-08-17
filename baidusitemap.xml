@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://smalldy.coding.me/2016/08/09/hexo-github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2016-08-17T12:16:00.300Z</lastmod>
+    <data>
+        <display>
+        <title>hexo + github 搭建博客</title>
+        <pubTime>2016-08-09T01:04:20.000Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+        <tag>github</tag>
+         
+        <tag>博客</tag>
+         
+         
+           
+             
+              <breadCrumb title="博客建设" url="http://smalldy.coding.me/categories/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E8%AE%BE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://smalldy.coding.me/2016/08/17/%E6%89%AB%E6%8F%8F%E6%B3%95%E8%A7%A3%E5%86%B3%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E6%9C%80%E5%A4%A7%E5%92%8C%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2016-08-17T03:19:52.896Z</lastmod>
     <data>
@@ -91,30 +115,6 @@
            
              
               <breadCrumb title="博客搭建" url="http://smalldy.coding.me/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://smalldy.coding.me/2016/08/09/hexo-github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2016-08-09T04:11:10.787Z</lastmod>
-    <data>
-        <display>
-        <title>hexo + github 搭建博客</title>
-        <pubTime>2016-08-09T01:04:20.000Z</pubTime>
-        
-        <tag>hexo</tag>
-         
-        <tag>github</tag>
-         
-        <tag>博客</tag>
-         
-         
-           
-             
-              <breadCrumb title="博客建设" url="http://smalldy.coding.me/categories/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E8%AE%BE/"/>
           
         </display>
     </data>
