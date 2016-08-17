@@ -100,7 +100,7 @@
     2.有命令行工具cmd或者gitBash(推荐)">
 <meta property="og:image" content="http://thumbnail0.baidupcs.com/thumbnail/0642a9e1c82e195afa00a600653eb38e?fid=2651461518-250528-339311015925464&time=1470715200&rt=yt&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-qg7Df35jIBYk6VpJ32e1uNabXLo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=5137294895354650634&dp-callid=0&size=c10000_u10000&quality=100">
 <meta property="og:image" content="http://thumbnail0.baidupcs.com/thumbnail/7e2d55222582dafabc0297200688fb5c?fid=2651461518-250528-95211021503423&time=1470715200&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zzOVdrTuZTTi4ujWEfGS1ewjpQo%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5137373574927166056&dp-callid=0&size=c10000_u10000&quality=90">
-<meta property="og:updated_time" content="2016-08-17T12:16:00.300Z">
+<meta property="og:updated_time" content="2016-08-17T13:50:36.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo + github 搭建博客">
 <meta name="twitter:description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求  
@@ -496,12 +496,11 @@ rss:     #生成RSS，暂时使用默认值
 deploy: 
   type: 
 </code></pre><p>修改如下:</p>
-<pre><code>deploy: 
-  type: git
-    repository: http://github.com/huangjunhui/huangjunhui.github.io.git
-    branch: master
-</code></pre><p><strong>注意: yml语法很严格,修改配置项的时候一定要注意每一个冒号后边都有一个空格!</strong><br><strong>配置项中的<code>repository:</code>后的地址,是创建仓库后得到的https:地址,但在这里写成http就可以</strong><br><img src="http://thumbnail0.baidupcs.com/thumbnail/7e2d55222582dafabc0297200688fb5c?fid=2651461518-250528-95211021503423&amp;time=1470715200&amp;rt=pr&amp;sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zzOVdrTuZTTi4ujWEfGS1ewjpQo%3d&amp;expires=8h&amp;chkbd=0&amp;chkv=0&amp;dp-logid=5137373574927166056&amp;dp-callid=0&amp;size=c10000_u10000&amp;quality=90" alt=""></p>
 </li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span> </div><div class="line"><span class="attr">  type:</span> git</div><div class="line"><span class="attr">  repository:</span> http://github.com/huangjunhui/huangjunhui.github.io.git</div><div class="line"><span class="attr">  branch:</span> master</div></pre></td></tr></table></figure>
+<p><strong>注意: yml语法很严格,修改配置项的时候一定要注意每一个冒号后边都有一个空格!</strong><br><strong>配置项中的<code>repository:</code>后的地址,是创建仓库后得到的https:地址,但在这里写成http就可以</strong><br><img src="http://thumbnail0.baidupcs.com/thumbnail/7e2d55222582dafabc0297200688fb5c?fid=2651461518-250528-95211021503423&amp;time=1470715200&amp;rt=pr&amp;sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-zzOVdrTuZTTi4ujWEfGS1ewjpQo%3d&amp;expires=8h&amp;chkbd=0&amp;chkv=0&amp;dp-logid=5137373574927166056&amp;dp-callid=0&amp;size=c10000_u10000&amp;quality=90" alt=""></p>
+<ol>
 <li>博客目录下打开gitbash,输入命令<code>hexo g</code>,生成静态网页文件,<code>hexo s</code>预览一下当前博客的效果,满意的话<code>hexo d</code> 部署到github</li>
 <li>通过xxx.github.io访问你的博客</li>
 <li>如果你在操作中遇到报错,请输入命令<code>npm install hexo-deployer-git --save</code>后再次尝试</li>
