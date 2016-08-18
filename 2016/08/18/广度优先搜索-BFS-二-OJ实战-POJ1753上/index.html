@@ -95,7 +95,7 @@
 <meta property="og:description" content="前言上次说到BFS的基本概念,本次就来一道OJ来试试手,选取的题目是POJ1753,毕竟菜鸟,解决这个问题一边看人家的解题一边又花了许多时间自己思考,总算是AC了.
 原题再现DescriptionFlip game is played on a rectangular 4x4 field with two-sided pieces placed on each of its 16 squares.">
 <meta property="og:image" content="http://poj.org/images/1753_1.jpg">
-<meta property="og:updated_time" content="2016-08-18T08:56:55.245Z">
+<meta property="og:updated_time" content="2016-08-18T09:15:23.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="广度优先搜索(BFS)_(二)_OJ实战:POJ1753(上)">
 <meta name="twitter:description" content="前言上次说到BFS的基本概念,本次就来一道OJ来试试手,选取的题目是POJ1753,毕竟菜鸟,解决这个问题一边看人家的解题一边又花了许多时间自己思考,总算是AC了.
@@ -347,7 +347,7 @@
 <h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>就是有这么一个4X4的棋盘,上边放满了黑白棋,你可以选择这16个棋子中的一个,然后翻转它(黑变白,白变黑),然而一旦你翻转了一个棋子,那么它上下左右的棋子(如果有的话)都要进行一次翻转,游戏的目标是<strong>使得棋盘内的棋子全部变成黑色或者白色</strong></p>
 <p>现在给你一个起始状态,你需要计算出<strong>至少需要多少步</strong>就能完成游戏,如果能完成输出这个数字,不能的话,输出 Impossible  </p>
 <p>这道题就完全可以通过BFS解决,为什么呢?因为这个问题可以很好的映射到图上,搜寻的目标就是棋子纯色,那么反过来,我们把<strong>棋盘上棋子的状态作为图的节点</strong>,那什么是边呢?或者确切的说,什么规则之下,可以视作两个节点(棋盘状态)是邻接的呢?答案很明显,就是<strong>一次翻转操作</strong>.</p>
-<p>将实际问题和数据结构对应起来以后,问题就清晰了许多,那么我们怎么表示这个状态呢?<br>假设我们用一个4X4数组表示一个棋盘状态,我们想一想,节点的个数是2x2x2x2xx16个2,也就是2的16次方,0xffff(65535)种状态!那么我们就要创建这样的数组65535个?!在BFS中,需要判断一个节点是否已经被访问过,我们怎么去判断呢?数组值逐一比较?这个工程就很庞大了!</p>
+<p>将实际问题和数据结构对应起来以后,问题就清晰了许多,那么我们怎么表示这个状态呢?<br>假设我们用一个4X4数组表示一个棋盘状态,我们想一想,节点的个数是2x2x2x2xx16个2,也就是2的16次方,0xffff(65535)+1 种状态!那么我们就要创建这样的数组65536个?!在BFS中,需要判断一个节点是否已经被访问过,我们怎么去判断呢?数组值逐一比较?这个工程就很庞大了!</p>
 <p>我们知道,棋子只有两种状态,黑色或者白色,一个棋子用一个二进制位就可以表示,16个棋子就是一个16位整数而已,0和0xffff就是目标状态!这种方法通常称之为<strong>位压缩</strong>存储</p>
 <h2 id="位压缩表示棋盘状态以及棋子翻转的位操作"><a href="#位压缩表示棋盘状态以及棋子翻转的位操作" class="headerlink" title="位压缩表示棋盘状态以及棋子翻转的位操作"></a>位压缩表示棋盘状态以及棋子翻转的位操作</h2><p>一个棋盘状态,如  </p>
 <pre><code>bwwb  
