@@ -87,27 +87,24 @@
 
 
 <meta name="description" content="概念介绍广度优先搜索 ,又称 宽度优先搜索 ,英文名 Breadth_First Search, 是图的一种遍历方法.   
-广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.  
-理解广度优先搜索的关键点不是学会如何实现广度优先搜索,诚然,这是基础,关键">
+广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="广度优先搜索(BFS)(一):基本概念">
 <meta property="og:url" content="http://smalldy.coding.me/2016/08/18/广度优先搜索-BFS-一-基本概念/index.html">
 <meta property="og:site_name" content="Smalldy 's blog">
 <meta property="og:description" content="概念介绍广度优先搜索 ,又称 宽度优先搜索 ,英文名 Breadth_First Search, 是图的一种遍历方法.   
-广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.  
-理解广度优先搜索的关键点不是学会如何实现广度优先搜索,诚然,这是基础,关键">
+广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.">
 <meta property="og:image" content="http://image18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094311066.png?933x455_130">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094341077.png?927x450_130">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094408053.png?933x452_130">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094519040.png?936x456_130">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094615075.png?932x450_130">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20160818/09/1833312482016081809465307.png?932x459_130">
-<meta property="og:updated_time" content="2016-08-18T02:55:28.988Z">
+<meta property="og:updated_time" content="2016-08-18T02:59:23.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="广度优先搜索(BFS)(一):基本概念">
 <meta name="twitter:description" content="概念介绍广度优先搜索 ,又称 宽度优先搜索 ,英文名 Breadth_First Search, 是图的一种遍历方法.   
-广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.  
-理解广度优先搜索的关键点不是学会如何实现广度优先搜索,诚然,这是基础,关键">
+广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.">
 <meta name="twitter:image" content="http://image18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094311066.png?933x455_130">
 
 
@@ -338,7 +335,7 @@
 
       
         <h2 id="概念介绍"><a href="#概念介绍" class="headerlink" title="概念介绍"></a>概念介绍</h2><p><strong>广度优先搜索</strong> ,又称 <strong>宽度优先搜索</strong> ,英文名 <strong>Breadth_First Search</strong>, 是<strong>图</strong>的一种遍历方法.   </p>
-<p>广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.  </p>
+<p>广度优先搜索的代码实现并不复杂,需要一个队列并且记录节点是否已经被访问,队列的特性使得先访问的节点的邻接节点也会被优先访问(已经访问的节点不应被再次访问),一层一层访问下去,知道搜索完全部目标.<br><a id="more"></a></p>
 <p>理解广度优先搜索的关键点不是学会如何实现广度优先搜索,诚然,这是基础,关键在于理解广度优先搜索是如何应用到问题当中,换句话说,我们如何将图的节点和问题的要素练习起来才是重中之重.</p>
 <h2 id="搜索过程"><a href="#搜索过程" class="headerlink" title="搜索过程"></a>搜索过程</h2><p>这里只考虑<strong>连通图</strong><br>拿这个图举例<br><img src="http://image18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094311066.png?933x455_130" alt="图"></p>
 <p>V1作为起点,先访问,访问过的就染成黑色<br><img src="http://img18.poco.cn/mypoco/myphoto/20160818/09/18333124820160818094341077.png?927x450_130" alt="步骤1"></p>
