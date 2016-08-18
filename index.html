@@ -326,54 +326,13 @@
 
       
         
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上次说到BFS的基本概念,本次就来一道OJ来试试手,选取的题目是POJ1753,毕竟菜鸟,解决这个问题一边看人家的解题一边又花了许多时间自己思考,总算是AC了.</p>
-<h2 id="原题再现"><a href="#原题再现" class="headerlink" title="原题再现"></a>原题再现</h2><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>Flip game is played on a rectangular 4x4 field with two-sided pieces placed on each of its 16 squares. One side of each piece is white and the other one is black and each piece is lying either it’s black or white side up. Each round you flip 3 to 5 pieces, thus changing the color of their upper side from black to white and vice versa. The pieces to be flipped are chosen every round according to the following rules:</p>
-<pre><code>1. Choose any one of the 16 pieces. 
-2. Flip the chosen piece and also all adjacent pieces to the left, to the right, 
-   to the top, and to the bottom of the chosen piece (if there are any).
-</code></pre><p><img src="http://poj.org/images/1753_1.jpg" alt="图"></p>
-<p>Consider the following position as an example:<br>bwbw<br>wwww<br>bbwb<br>bwwb           </p>
-<p>Here “b” denotes pieces lying their black side up and “w” denotes pieces lying their white side up. If we choose to flip the 1st piece from the 3rd row (this choice is shown at the picture), then the field will become: </p>
-<p>bwbw<br>bwww<br>wwwb<br>wwwb  </p>
-<p>The goal of the game is to flip either all pieces white side up or all pieces black side up. You are to write a program that will search for the minimum number of rounds needed to achieve this goal. </p>
-<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>The input consists of 4 lines with 4 characters “w” or “b” each that denote game field position.</p>
-<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>Write to the output file a single integer number - the minimum number of rounds needed to achieve the goal of the game from the given position. If the goal is initially achieved, then write 0. If it’s impossible to achieve the goal, then write the word “Impossible” (without quotes).</p>
-<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h3><p>bwwb<br>bbwb<br>bwwb<br>bwww </p>
-<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h3><p>4</p>
-<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><p>Northeastern Europe 2000</p>
-<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>就是有这么一个4X4的棋盘,上边放满了黑白棋,你可以选择这16个棋子中的一个,然后翻转它(黑变白,白变黑),然而一旦你翻转了一个棋子,那么它上下左右的棋子(如果有的话)都要进行一次翻转,游戏的目标是<strong>使得棋盘内的棋子全部变成黑色或者白色</strong></p>
-<p>现在给你一个起始状态,你需要计算出<strong>至少需要多少步</strong>就能完成游戏,如果能完成输出这个数字,不能的话,输出 Impossible  </p>
-<p>这道题就完全可以通过BFS解决,为什么呢?因为这个问题可以很好的映射到图上,搜寻的目标就是棋子纯色,那么反过来,我们把<strong>棋盘上棋子的状态作为图的节点</strong>,那什么是边呢?或者确切的说,什么规则之下,可以视作两个节点(棋盘状态)是邻接的呢?答案很明显,就是<strong>一次翻转操作</strong>.</p>
-<p>将实际问题和数据结构对应起来以后,问题就清晰了许多,那么我们怎么表示这个状态呢?<br>假设我们用一个4X4数组表示一个棋盘状态,我们想一想,节点的个数是2x2x2x2xx16个2,也就是2的16次方,0xffff(65535)种状态!那么我们就要创建这样的数组65535个?!在BFS中,需要判断一个节点是否已经被访问过,我们怎么去判断呢?数组值逐一比较?这个工程就很庞大了!</p>
-<p>我们知道,棋子只有两种状态,黑色或者白色,一个棋子用一个二进制位就可以表示,16个棋子就是一个16位整数而已,0和0xffff就是目标状态!这种方法通常称之为<strong>位压缩</strong>存储</p>
-<h2 id="位压缩表示棋盘状态以及棋子翻转的位操作"><a href="#位压缩表示棋盘状态以及棋子翻转的位操作" class="headerlink" title="位压缩表示棋盘状态以及棋子翻转的位操作"></a>位压缩表示棋盘状态以及棋子翻转的位操作</h2><p>一个棋盘状态,如  </p>
-<pre><code>bwwb  
-bbwb  
-bwwb  
-bwww  
-</code></pre><p>可以用16位整数来表示:<br><code>1001 1101 1001 1000</code><br><code>0000 0000 0000 0000</code>到 <code>1111 1111 1111 111</code> 可以表示所有状态<code>0xffff+1</code>种</p>
-<p>有了方便的状态表示,如何对棋子进行翻转呢?</p>
-<pre><code>1 0 0 1  
-1 1 0 1  
-1 0 0 1  
-1 0 0 0  
-</code></pre><p>翻转<code>(0,0)</code>位置的棋子,会变成</p>
-<pre><code>0 1 0 1  
-0 1 0 1  
-1 0 0 1  
-1 0 0 0  
-</code></pre><p>就是将(0,0)位置以及十字区域内的0 ,1翻转<br>我们知道 <code>0 ^ 1 = 1</code>, <code>1 ^ 1 = 0</code>  (^ 表示亦或操作),因此,亦或操作能够达到翻转的效果,以上操作其实等效于:<br><code>1001 1101 1001 1000 ^ 1100 1000 0000 0000 =&gt; 1010 0101 1001 10000</code></p>
-<pre><code>任何一个状态 ^ 在(x,y)上翻转对应的二进制码 =&gt; 新的状态
-</code></pre><p>像这样的二进制码应该有16个,分别代表翻转16个位置上的棋子.我编写了如下代码获取这16个数字:  </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">turn</span><span class="params">(<span class="keyword">int</span> status, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> s  = status;<span class="comment">//当前的状态</span></div><div class="line">	<span class="comment">//获取位置</span></div><div class="line">	<span class="keyword">int</span> pos = y*<span class="number">4</span> +x;</div><div class="line">	<span class="keyword">int</span> stan = <span class="number">0x8000</span>;</div><div class="line">	<span class="keyword">int</span> cur;</div><div class="line">	cur = stan &gt;&gt; pos; <span class="comment">//获取操作码 </span></div><div class="line">	status  = status ^ cur;<span class="comment">// 进行操作 </span></div><div class="line">	<span class="keyword">if</span>(x + <span class="number">1</span> &lt; <span class="number">4</span>)&#123;</div><div class="line">		pos = y*<span class="number">4</span> + x + <span class="number">1</span>; </div><div class="line">		cur = stan &gt;&gt; pos; <span class="comment">//获取操作码 </span></div><div class="line">		status  = status ^ cur;<span class="comment">// 进行操作 </span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(x - <span class="number">1</span> &gt;= <span class="number">0</span>)&#123;</div><div class="line">		pos = y*<span class="number">4</span> + x - <span class="number">1</span>; </div><div class="line">		cur = stan &gt;&gt; pos; <span class="comment">//获取操作码 </span></div><div class="line">		status  = status ^ cur;<span class="comment">// 进行操作</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(y + <span class="number">1</span> &lt; <span class="number">4</span>)&#123;</div><div class="line">		pos = (y+<span class="number">1</span>)*<span class="number">4</span> + x; </div><div class="line">		cur = stan &gt;&gt; pos; <span class="comment">//获取操作码 </span></div><div class="line">		status  = status ^ cur;<span class="comment">// 进行操作</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(y - <span class="number">1</span> &gt;= <span class="number">0</span>)&#123;</div><div class="line">		pos = (y<span class="number">-1</span>)*<span class="number">4</span> + x; </div><div class="line">		cur = stan &gt;&gt; pos; <span class="comment">//获取操作码 </span></div><div class="line">		status  = status ^ cur;<span class="comment">// 进行操作</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> status;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	freopen(<span class="string">"out.txt"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++)&#123;</div><div class="line">		<span class="keyword">int</span> y = i/<span class="number">4</span>;</div><div class="line">		<span class="keyword">int</span> x = i%<span class="number">4</span>;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; turn(<span class="number">0</span>,x,y) &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果会保存到<code>out.txt</code>中.<br>得到这16个二进制数以后,想要操作那个棋子就非常简单了~直接与对应的二进制代码进行亦或操作即可</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这次主要分析了问题,讲解了位压缩过程,下一篇文章将会完全解决1753!</p>
-<blockquote>
-<p><strong>本文由 Smalldy 原创, 发表于 <a href="http://smalldy.coding.me">Smalldy ‘s blog</a>, 转载请保留!</strong></p>
-</blockquote>
-
-          
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上次说到BFS的基本概念,本次就来一道OJ来试试手,选取的题目是POJ1753,毕竟菜鸟,解决这个问题一边看人家的解题一边又花了许多时间自己思考,总算是AC了.</p>
+<h2 id="原题再现"><a href="#原题再现" class="headerlink" title="原题再现"></a>原题再现</h2><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>Flip game is played on a rectangular 4x4 field with two-sided pieces placed on each of its 16 squares.
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/18/广度优先搜索-BFS-二-OJ实战-POJ1753上/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
