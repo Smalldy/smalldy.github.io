@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://smalldy.coding.me/2016/08/18/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2-BFS-%E4%B8%80-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</loc>
+    <lastmod>2016-08-18T02:55:28.988Z</lastmod>
+    <data>
+        <display>
+        <title>广度优先搜索(BFS)(一):基本概念</title>
+        <pubTime>2016-08-18T00:49:14.000Z</pubTime>
+        
+        <tag>广度优先搜索</tag>
+         
+        <tag>BFS</tag>
+         
+        <tag>算法基础</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法/ACM" url="http://smalldy.coding.me/categories/%E7%AE%97%E6%B3%95-ACM/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://smalldy.coding.me/2016/08/09/hexo-github-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2016-08-17T14:10:12.521Z</lastmod>
     <data>
@@ -85,9 +109,9 @@
         <title>图床(二):新的尝试</title>
         <pubTime>2016-08-11T02:03:17.000Z</pubTime>
         
-        <tag>POCO</tag>
-         
         <tag>图床</tag>
+         
+        <tag>POCO</tag>
          
          
            
@@ -107,9 +131,9 @@
         <title>图床(一):使用百度云作免费图床</title>
         <pubTime>2016-08-09T05:53:28.000Z</pubTime>
         
-        <tag>图床</tag>
-         
         <tag>百度云</tag>
+         
+        <tag>图床</tag>
          
          
            
