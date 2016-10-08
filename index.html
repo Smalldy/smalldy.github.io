@@ -353,40 +353,8 @@
 <h3 id="实时任务类型"><a href="#实时任务类型" class="headerlink" title="实时任务类型"></a>实时任务类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 按照对截止日期的要求划分</div><div class="line">	1. 硬实时任务</div><div class="line">	2. 软实时任务</div><div class="line">2. 按任务是否呈现周期性划分</div><div class="line">	1. 周期性任务</div><div class="line">	2. 非周期性任务</div></pre></td></tr></table></figure>
 <h3 id="实时系统与分时系统的特征比较"><a href="#实时系统与分时系统的特征比较" class="headerlink" title="实时系统与分时系统的特征比较"></a>实时系统与分时系统的特征比较</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. 多路性</div><div class="line">2. 独立性</div><div class="line">3. 及时性</div><div class="line">4. 交互性 实时系统人机交互仅限于访问系统中某些特定的专用服务程序</div><div class="line">5. 可靠性 实时系统要求系统 高度可靠</div></pre></td></tr></table></figure>
 <h3 id="微机操作系统的发展"><a href="#微机操作系统的发展" class="headerlink" title="微机操作系统的发展"></a>微机操作系统的发展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 单用户单任务OS: CP/M MS-DOS </div><div class="line">2. 单用户多任务OS: Windows</div><div class="line">3. 多用户多任务OS: Unix Linux</div></pre></td></tr></table></figure>
-<h3 id="操作系统的基本特征"><a href="#操作系统的基本特征" class="headerlink" title="操作系统的基本特征"></a>操作系统的基本特征</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">1. 并发</div><div class="line">	注:</div><div class="line">	1. 并行: 两个或多个事件在同一时刻发生</div><div class="line">	2. 并发: 两个或多个事件在同一时间间隔发生</div><div class="line">	3. 进程: 可以在系统中独立运行,并作为资源分配的基本单位</div><div class="line">	4. 线程:</div><div class="line">2. 共享: 系统中的资源可供内存中多个并发执行的进程（线程）共同使用，称为资源共享，或资源复用</div><div class="line">	注:</div><div class="line">	共享方式:</div><div class="line">		1. 互斥共享 打印机,磁带机,一段时间内只允许一个进程(线程)访问</div><div class="line">		2. 同时访问 允许多个进程(或线程)同时(单处理机情况下:宏观同时,围观交替)访问,如磁盘</div><div class="line">3. 虚拟: 通过某种技术把一个物理实体变为多个逻辑上的对应物</div><div class="line">	注:</div><div class="line">	虚拟技术:</div><div class="line">		1. 时分复用技术</div><div class="line">			1. 虚拟处理机</div><div class="line">			2. 虚拟设备</div><div class="line">		2. 空分复用技术</div><div class="line">			1. 虚拟磁盘</div><div class="line">			2. 虚拟存储器</div><div class="line">4. 异步: 进程以人们不可预知的速度向前推进</div><div class="line">	注:</div><div class="line">	特征: </div><div class="line">		1. 进程的执行“停停走走”</div><div class="line">		2. 需要同步机制，以保证只要运行环境相同，作业经多次运行，都会获得完全相同的结果</div><div class="line"></div><div class="line">```  </div><div class="line"></div><div class="line">### 操作系统的功能 ###</div></pre></td></tr></table></figure>
-<ol>
-<li>处理机管理功能<ol>
-<li>进程控制</li>
-<li>进程同步</li>
-<li>进程通信</li>
-<li>调度</li>
-</ol>
-</li>
-<li>存储器管理功能<ol>
-<li>内存分配</li>
-<li>内存保护</li>
-<li>地址映射</li>
-<li>内存扩充</li>
-</ol>
-</li>
-<li>设备管理功能<ol>
-<li>缓冲管理</li>
-<li>设备分配</li>
-<li>设备处理</li>
-</ol>
-</li>
-<li>文件管理功能<ol>
-<li>文件存储空间的管理</li>
-<li>目录管理</li>
-<li>文件的读/写管理和保护</li>
-</ol>
-</li>
-<li>操作系统与用户之间的接口<ol>
-<li>用户接口</li>
-<li>程序接口<br>```</li>
-</ol>
-</li>
-</ol>
+<h3 id="操作系统的基本特征"><a href="#操作系统的基本特征" class="headerlink" title="操作系统的基本特征"></a>操作系统的基本特征</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">1. 并发</div><div class="line">	注:</div><div class="line">	1. 并行: 两个或多个事件在同一时刻发生</div><div class="line">	2. 并发: 两个或多个事件在同一时间间隔发生</div><div class="line">	3. 进程: 可以在系统中独立运行,并作为资源分配的基本单位</div><div class="line">	4. 线程:</div><div class="line">2. 共享: 系统中的资源可供内存中多个并发执行的进程（线程）共同使用，称为资源共享，或资源复用</div><div class="line">	注:</div><div class="line">	共享方式:</div><div class="line">		1. 互斥共享 打印机,磁带机,一段时间内只允许一个进程(线程)访问</div><div class="line">		2. 同时访问 允许多个进程(或线程)同时(单处理机情况下:宏观同时,围观交替)访问,如磁盘</div><div class="line">3. 虚拟: 通过某种技术把一个物理实体变为多个逻辑上的对应物</div><div class="line">	注:</div><div class="line">	虚拟技术:</div><div class="line">		1. 时分复用技术</div><div class="line">			1. 虚拟处理机</div><div class="line">			2. 虚拟设备</div><div class="line">		2. 空分复用技术</div><div class="line">			1. 虚拟磁盘</div><div class="line">			2. 虚拟存储器</div><div class="line">4. 异步: 进程以人们不可预知的速度向前推进</div><div class="line">	注:</div><div class="line">	特征: </div><div class="line">		1. 进程的执行“停停走走”</div><div class="line">		2. 需要同步机制，以保证只要运行环境相同，作业经多次运行，都会获得完全相同的结果</div></pre></td></tr></table></figure>
+<h3 id="操作系统的功能"><a href="#操作系统的功能" class="headerlink" title="操作系统的功能"></a>操作系统的功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">1. 处理机管理功能</div><div class="line">	1. 进程控制</div><div class="line">	2. 进程同步</div><div class="line">	3. 进程通信</div><div class="line">	4. 调度</div><div class="line">2. 存储器管理功能</div><div class="line">	1. 内存分配</div><div class="line">	2. 内存保护</div><div class="line">	3. 地址映射</div><div class="line">	4. 内存扩充</div><div class="line">3. 设备管理功能</div><div class="line">	1. 缓冲管理</div><div class="line">	2. 设备分配</div><div class="line">	3. 设备处理</div><div class="line">4. 文件管理功能</div><div class="line">	1. 文件存储空间的管理</div><div class="line">	2. 目录管理</div><div class="line">	3. 文件的读/写管理和保护</div><div class="line">5. 操作系统与用户之间的接口</div><div class="line">	1. 用户接口</div><div class="line">	2. 程序接口</div></pre></td></tr></table></figure>
 <p>未完待续…2016/10/8 22:07:01 </p>
 
           
