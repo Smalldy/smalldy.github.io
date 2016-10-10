@@ -1,0 +1,960 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="计算机组成原理," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Smalldy 's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="汉明码传输纠错过程奇偶校验介绍汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解奇偶校验问题.
+
+奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理总结">
+<meta property="og:url" content="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/index.html">
+<meta property="og:site_name" content="Smalldy 's blog">
+<meta property="og:description" content="汉明码传输纠错过程奇偶校验介绍汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解奇偶校验问题.
+
+奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
+<meta property="og:updated_time" content="2016-10-10T13:51:13.582Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机组成原理总结">
+<meta name="twitter:description" content="汉明码传输纠错过程奇偶校验介绍汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解奇偶校验问题.
+
+奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/"/>
+
+  <title> 计算机组成原理总结 | Smalldy 's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6e0a0c8bf52bc0c329169df8b962fb68";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Smalldy 's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">技术宅拯救世界</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                计算机组成原理总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-10T10:53:02+08:00" content="2016-10-10">
+              2016-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机组成原理/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机组成原理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/10/计算机组成原理总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/10/计算机组成原理总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="汉明码传输纠错过程"><a href="#汉明码传输纠错过程" class="headerlink" title="汉明码传输纠错过程"></a>汉明码传输纠错过程</h3><h4 id="奇偶校验介绍"><a href="#奇偶校验介绍" class="headerlink" title="奇偶校验介绍"></a>奇偶校验介绍</h4><p>汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解<strong>奇偶校验</strong>问题.</p>
+<blockquote>
+<p>奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校验“1”的个数是否为奇数，从而确定传输代码的正确性。</p>
+</blockquote>
+<h4 id="偶校验示例"><a href="#偶校验示例" class="headerlink" title="偶校验示例"></a>偶校验示例</h4><p>待传输二进制串为 101101<br>在最后增加一位作为校验位<br>采用偶校验  </p>
+<p>101101_   : 原本的二进制串有4个1, 偶校验要求整个串1的个数为偶数,所以校验位填0<br>最终需要传输的数据为: 1011010<br>若接收方收到: 1011010 经检验有偶数个1 表示传输正确 去掉校验位,获得: 101101<br>若接收方收到: 1111010 经检验有奇数个1 表示传输错误!  </p>
+<h4 id="汉明码传输纠错示例"><a href="#汉明码传输纠错示例" class="headerlink" title="汉明码传输纠错示例"></a>汉明码传输纠错示例</h4><p>汉明码需要在原串的基础上增加若干位, 假设原串有n位, 需要增加K位, n 和 k 满足一下条件(k取小):<br>2^k &gt;= n + k + 1<br>下表列出了代码长度与检测位长度之间的关系:  </p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th style="text-align:right">k(最小)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>2~4</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td>5~11</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td>12~26</td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td>27~57</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td>58~120</td>
+<td style="text-align:right">7</td>
+</tr>
+</tbody>
+</table>
+<p>最终形成的代码为 n+k 位<br>以<strong>1011</strong>为例子,<strong>1011</strong>为<strong>4</strong>位,那么<strong>k=3</strong>,则需要传输的位数为<strong>7</strong><br><strong>安插检测位,构成目标串</strong><br>这n+k位的二进制数字中,有k位检验位,这些位在数字中的哪些地方呢?<br>如果把这串数字从左到右从1开始进行编号,那么这些校验位的位置分别是第 1,2,4,8,16,32…..位,写作C1,C2,C4,C8…..(1 2 4 8…为下标)</p>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">C1</td>
+<td style="text-align:center">C2</td>
+<td style="text-align:center">a</td>
+<td style="text-align:center">C4</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">c</td>
+<td>d</td>
+</tr>
+</tbody>
+</table>
+<p>其中,a b c d,是原串,仍按上述示例,则表为</p>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">C1</td>
+<td style="text-align:center">C2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">C4</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>确定检测位的数值</strong><br>C1 由1,3,5,7,9,11…..位进行奇偶校验,作为校验位从而确定数值<br>C2 由2,3,6,7,10,11,14,15..  确定<br>C4 由4,5,6,7,12,13,14,15..  确定<br>C8 由8,9,10,11,12,13,14,15,24… 确定<br>其规律是:<br>Cn 的校验序列是以n开始,连续n位,跳过n位,再连续n位,再跳过n为…..  构成<br>例如:<br>C2 由2开始 连续2位,2,3,跳过4,5,连续2位,6,7,跳过8,9,连续两位10,11…</p>
+<p>例如</p>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">C1</td>
+<td style="text-align:center">C2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">C4</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>C1 与 3, 5, 7位进行偶校验(是奇校验还是偶校验题目中会给出)<br>C1 1 0 1 偶校验 C1 为 0<br>C2 与 3, 6, 7<br>C2 1 1 1 偶校验 C2 为 1<br>C4 与 5, 6, 7<br>C4 0 1 1 偶校验 C4 为 0</p>
+<p>则  </p>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>则需要传输的代码是: 0110011</p>
+<p>如果接受方接受的代码为 0110011<br>在Cn位置依然按照上边的奇偶校验规则校验(这个例子是偶校验)</p>
+<p>除了数1的个数,还可以用对应位的亦或运算来得出是否符合校验<br>在偶校验中,有偶数个1,因此亦或得到的结果,如符合偶校验应该是<strong>0</strong>,否则为<strong>1</strong><br>在奇校验中,有奇数个1,因此亦或得到的结果,如符合奇校验应该是<strong>1</strong>,否则为<strong>0</strong></p>
+<blockquote>
+<p>亦或性质: 奇数个1亦或得1 偶数个1亦或得0 x亦或0得x</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td>-</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">原串</td>
+</tr>
+<tr>
+<td>是否符合偶校验</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<p>如果接受方接受的代码为 0110111</p>
+<table>
+<thead>
+<tr>
+<th>二进制串序号</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td>-</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">校验</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">原串</td>
+<td style="text-align:center">原串</td>
+</tr>
+<tr>
+<td>是否符合偶校验</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<p>(Pn 采用 Cn的校验序列参与运算)<br>P1 = 1  亦或 3  亦或 5  亦或 7 = 1 错误!<br>P2 = 2  亦或 3  有货 6  亦或 7 = 0 正确!<br>P4 = 4  亦或 5  亦或 6  亦或 7 = 1 错误!</p>
+<p>2 3 6 7位正确<br>P1表示 1 或 5 可能错误<br>P4表示 4 或 5 可能错误<br>根据一位纠错能力,可知 第5位 出现错误!</p>
+<p>将第五位修改,0110111 -&gt; 0110011 去除 1 2 4位,得到 <strong>1011</strong> , 纠错完成!</p>
+<blockquote>
+<p>请参考&lt;&lt;计算机组成原理&gt;&gt;第100页的例子对0101的汉明码纠错示例再次进行实验,验证该方法</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机组成原理/" rel="tag">#计算机组成原理</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/08/操作系统知识摘录/" rel="next" title="操作系统知识摘录">
+                <i class="fa fa-chevron-left"></i> 操作系统知识摘录
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/10/MS-SQL-Server-2014-Express-数据库软件下载/" rel="prev" title="MS SQL Server 2014 Express 数据库软件下载">
+                MS SQL Server 2014 Express 数据库软件下载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/10/计算机组成原理总结/"
+           data-title="计算机组成原理总结" data-url="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Smalldy" />
+          <p class="site-author-name" itemprop="name">Smalldy</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.josephcz.win/" title="Joseph's blog" target="_blank">Joseph's blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#汉明码传输纠错过程"><span class="nav-number">1.</span> <span class="nav-text">汉明码传输纠错过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#奇偶校验介绍"><span class="nav-number">1.1.</span> <span class="nav-text">奇偶校验介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偶校验示例"><span class="nav-number">1.2.</span> <span class="nav-text">偶校验示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#汉明码传输纠错示例"><span class="nav-number">1.3.</span> <span class="nav-text">汉明码传输纠错示例</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Smalldy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smalldy"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
