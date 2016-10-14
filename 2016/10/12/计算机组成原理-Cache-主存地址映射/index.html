@@ -73,8 +73,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="Smalldy 's blog" type="application/atom+xml" />
 
@@ -91,9 +89,7 @@
 <meta name="description" content="由主存地址映射到Cache地址成为地址映射,地址映射方式有很多,有直接映射, 全相联映射, 组相联映射.
 
 Cache的引入
-通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理
-
-由于程序访问的局部性原理,可以">
+通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机组成原理:Cache--主存地址映射">
 <meta property="og:url" content="http://smalldy.coding.me/2016/10/12/计算机组成原理-Cache-主存地址映射/index.html">
@@ -101,9 +97,7 @@ Cache的引入
 <meta property="og:description" content="由主存地址映射到Cache地址成为地址映射,地址映射方式有很多,有直接映射, 全相联映射, 组相联映射.
 
 Cache的引入
-通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理
-
-由于程序访问的局部性原理,可以">
+通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理">
 <meta property="og:image" content="http://image18.poco.cn/mypoco/myphoto/20161013/11/18333124820161013112612070_640.jpg?302x345_120">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20161013/15/18333124820161013153100047.jpg?335x187_120">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20161013/16/18333124820161013160414012.jpg?271x189_120">
@@ -114,15 +108,13 @@ Cache的引入
 <meta property="og:image" content="http://image18.poco.cn/mypoco/myphoto/20161014/11/18333124820161014114824048.jpg?588x343_120">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20161014/11/18333124820161014114900095.jpg?595x347_120">
 <meta property="og:image" content="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013172349097.jpg?391x118_120">
-<meta property="og:updated_time" content="2016-10-14T04:18:17.804Z">
+<meta property="og:updated_time" content="2016-10-14T14:12:21.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机组成原理:Cache--主存地址映射">
 <meta name="twitter:description" content="由主存地址映射到Cache地址成为地址映射,地址映射方式有很多,有直接映射, 全相联映射, 组相联映射.
 
 Cache的引入
-通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理
-
-由于程序访问的局部性原理,可以">
+通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为程序访问的局部性原理">
 <meta name="twitter:image" content="http://image18.poco.cn/mypoco/myphoto/20161013/11/18333124820161013112612070_640.jpg?302x345_120">
 
 
@@ -358,6 +350,7 @@ Cache的引入
 <h2 id="Cache的引入"><a href="#Cache的引入" class="headerlink" title="Cache的引入"></a>Cache的引入</h2><blockquote>
 <p>通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为<strong><code>程序访问的局部性原理</code></strong></p>
 </blockquote>
+<a id="more"></a>
 <p>由于程序访问的局部性原理,可以引入Cache, 使得CPU与Cache进行更加高速的数据交换, 解决CPU速度与主存速度不相匹配的矛盾.</p>
 <h2 id="Cache-工作原理"><a href="#Cache-工作原理" class="headerlink" title="Cache 工作原理"></a>Cache 工作原理</h2><p>假设主存地址有n位, 可知主存可编号的<strong>字</strong>为<strong>2^n</strong>个.<br>为了与Cache映射, 将主存与缓存都分为若干个 <strong>块</strong>, 每个快包含若干<strong>字</strong><br><strong>举例说明</strong>:<br>需要认识几点:</p>
 <ol>
@@ -386,7 +379,7 @@ Cache的引入
 
 </blockquote>
 <p>由于Cache所能存储的块数远远小于主存的存储量,所以Cache的缓存块不能永久唯一的对应一个主存快,因此,需要为缓存块设置一个标记,用来表示当前存储的是哪一个主存快.<br>在下面的3中映射方法中,都会涉及到标记的构成.</p>
-<h2 id="1-直接映射"><a href="#1-直接映射" class="headerlink" title="1.直接映射"></a>1.直接映射</h2><p>在直接映射中, 主存和cache的映射关系为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">i = j mode C 或 i = j mod 2^c</div><div class="line">其中, i是Cache的块编号, j是主存的块编号</div></pre></td></tr></table></figure></p>
+<h2 id="1-直接映射"><a href="#1-直接映射" class="headerlink" title="1. 直接映射"></a>1. 直接映射</h2><p>在直接映射中, 主存和cache的映射关系为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">i = j mode C 或 i = j mod 2^c</div><div class="line">其中, i是Cache的块编号, j是主存的块编号</div></pre></td></tr></table></figure></p>
 <p>如果读者仔细阅读了Cache 工作原理一节, 那么很容易知道这两个公式是完全相同的,对于一个被划分为2^x的主存, 它的块需要用x位二进制编号, 对于Cache来说 C = 2^c = Cache的块数, 因此就出现了这两个公式.</p>
 <p>上述公式如果用自然语言表达的话, 可以表示为:<br>编号为j的主存块映射到Cache中, 那么需要映射到的Cache块的编号是j对Cache的总块数的余数</p>
 <p>假设Cache有2块,编号为0,1,主存有4块,编号为0 1 2 3, 那么主存块3映射到Cache的块编号为 <code>3 mod 2 = 1</code></p>
@@ -409,7 +402,7 @@ Cache的引入
 <li>主存地址为4位, 表示需要4位二进制数字来表示任意一个字的地址,从0000到1111</li>
 <li>主存一共拥有 2^4 = 16 个字</li>
 <li>按照条件2, 主存被分为 4 个块</li>
-<li>区分4个字需要两个二进制数字(从00到11)</li>
+<li>区分4个字需要两个二进制数字(从00到11) <code>采用的是按字寻址</code></li>
 <li>区分4个块需要两个而进制数字(从00到11)</li>
 </ol>
 <p>可以很清楚的知道, 主存的地址可以大致分为两个部分:低2位 和 高2位<br><img src="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013172349097.jpg?391x118_120" alt="直接映射的主存地址结构"><br>对于这个图来说:</p>
@@ -429,8 +422,27 @@ Cache的引入
 <p>大致流程:</p>
 <font face="微软雅黑" ,="" color="green"><br>1. 在Cache与主存建立联系的时候, (例如映射情况2), Cache的字块标记就被填充为地址的前t位(1);<br>2. 硬件系统对CPU欲访问的地址解析, 知道前t位代表的是主存字块标记, 便将地址中提取出的t位数字的数值(1)与Cache的标记(1)进行比较, 如果相符合, 说明命中, 根据c位Cache字块标记(0)寻找Cache内指定编号的字块(编号为0),根据最后的b位(2位)字块内地址寻找到对应标号的字(编号为10的字).</font>
 
+<h2 id="2-全相联映射"><a href="#2-全相联映射" class="headerlink" title="2. 全相联映射"></a>2. 全相联映射</h2><p>这种映射模式允许Cache缓存块与任意主存块建立联系, 由于没有固定公式约束, 要想判断Cache字块到底是与那个主存块建立联系, Cache的主存标记要保留主存块的全部块地址信息, 也就是高m位( 总地址位数-b )都要作为Cache的标记.</p>
+<p>全相联映射灵活性很高, 但是所需要的电路甚多,成本也较高.</p>
+<h2 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a>组相联映射</h2><p>该种映射是上述两种映射的折中, 将Cache分为Q组, 每组R块, 并有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">i = j mod Q</div><div class="line">i: 缓存组号</div><div class="line">j: 主存块号</div><div class="line">Q: Cache 组数</div></pre></td></tr></table></figure></p>
+<p>与前面相同, 地址最后b位是字块内地址, 按b位计算, 由于分组数 = Cache分块总数(C)/每一组的块数(R),有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">分组数 = 2^c / 2^r = 2^(c-r)</div><div class="line">其中:2^r = R</div></pre></td></tr></table></figure></p>
+<p>因此,组地址需要c-r位来表示,剩余的高位作为主存标记.</p>
+<font face="黑体" color="red" size="3"><br>本文CPU的寻址方式均为按字寻址,按字寻址的意义是CPU访问主存的单位是一个存储字, 按字寻址和按字节寻址在计算最后b为字块内地址时结果是不同的, 遵循公式2^b = 存取单位个数, 例如计算按字节寻址的b时, 2^b = 字的数量*字内包含的字节数</font>
+
+
+<h2 id="各个映射例题总结"><a href="#各个映射例题总结" class="headerlink" title="各个映射例题总结"></a>各个映射例题总结</h2><p>《计算机组成原理》 P_120 例 4.8<br><strong><br>假设主存容量512KB, Cache容量为4KB, 每个字块16个字, 每个字32位<br>(1) Cache地址有多少位? 可容纳多少块?<br>(2) 主存地址有多少位? 可容纳多少块?<br>(3) 在直接映射方式下, 主存的第几块映射到Cache中的第5块<br>(4) 画出直接映射方式下主存地址字段中各段的位数
+</strong><br>大多数的题目都是按字节寻址的.  </p>
+<ol>
+<li><code>4KB = 4*2^10 Byte  / 1 Byte = 2^12</code> =&gt; Cache 地址需要 12 位. 每个字块16字,每个字32/8=4字节,块数为 <code>4KB/16*32bit=4*2^10*8bit/16*32bit=2^6=64</code>块<br>注: 计算4KB中有多少个1字节,若有2^x个字节, 那么就需要x位才能定址2^x个字节</li>
+<li>主存地址19位, 512KB/16<em>4B = 2^13 块 = 8192块<br>注: 16</em>4B 表示一块的字节(B,Byte)数.</li>
+<li>5, 64+5, 64*2+5, 64*3+5, 2^13 -64 + 5能映射到Cache的第5块<br>注:<br>1<br>1 + Cache块数<br>1 + Cache块数 * 2<br>1 + Cache块数 * 3<br>…<br>1 + 2^13 - 64<br>能映射到Cache的第1块<br>n<br>n + Cache块数<br>n + Cache块数 * 2<br>n + Cache块数 * 3<br>…<br>n + 2^13 - 64<br>能映射到Cache的第n块</li>
+<li>字块内地址 6 位 缓存字块地址 6 位  主存字块标记 7 位<br>注:<br>一个块有16个字, 每个字4字节(32bit), 每块2^6字节, 按字节寻址需要6位二进制数字定址<br>Cache 64 块, 64=2^6 需要 6位二进制数字定址<br>剩余的19-12=7位做主存字块标记</li>
+</ol>
+<font face="新宋体" color="gray">题目陆续添加中……..</font>
+
+
 <blockquote>
-<p>未完待续 2016/10/14 12:18:07 </p>
+<p><strong>本文由 Smalldy 原创, 发表于 <a href="http://blog.smalldy.xy z" target="_blank" rel="external">Smalldy ‘s blog</a>, 转载请保留!</strong></p>
 </blockquote>
 
       
@@ -650,7 +662,7 @@ Cache的引入
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache的引入"><span class="nav-number">1.</span> <span class="nav-text">Cache的引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-工作原理"><span class="nav-number">2.</span> <span class="nav-text">Cache 工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-直接映射"><span class="nav-number">3.</span> <span class="nav-text">1.直接映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接映射的例子"><span class="nav-number">3.1.</span> <span class="nav-text">直接映射的例子</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache的引入"><span class="nav-number">1.</span> <span class="nav-text">Cache的引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-工作原理"><span class="nav-number">2.</span> <span class="nav-text">Cache 工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-直接映射"><span class="nav-number">3.</span> <span class="nav-text">1. 直接映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接映射的例子"><span class="nav-number">3.1.</span> <span class="nav-text">直接映射的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-全相联映射"><span class="nav-number">4.</span> <span class="nav-text">2. 全相联映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组相联映射"><span class="nav-number">5.</span> <span class="nav-text">组相联映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各个映射例题总结"><span class="nav-number">6.</span> <span class="nav-text">各个映射例题总结</span></a></li></ol></div>
             
           </div>
         </section>
