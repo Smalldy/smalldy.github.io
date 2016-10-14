@@ -257,6 +257,205 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/12/计算机组成原理-Cache-主存地址映射/" itemprop="url">
+                  计算机组成原理:Cache--主存地址映射
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-12T22:50:30+08:00" content="2016-10-12">
+              2016-10-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/计算机组成原理/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机组成原理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/12/计算机组成原理-Cache-主存地址映射/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/12/计算机组成原理-Cache-主存地址映射/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>由主存地址映射到Cache地址成为地址映射,地址映射方式有很多,有<strong><code>直接映射</code></strong>, <strong><code>全相联映射</code></strong>, <strong><code>组相联映射</code></strong>.</p>
+</blockquote>
+<h2 id="Cache的引入"><a href="#Cache的引入" class="headerlink" title="Cache的引入"></a>Cache的引入</h2><blockquote>
+<p>通过大量经典程序的分析,发现CPU从主存取指令或取数据,在一定时间内,只是对主存局部地址区域访问. 由于指令和数据在主存中的地址分布不是随机的, 而是相对的簇聚, 使得CPU在执行程序时,访问具有相对的局部性,这就称为<strong><code>程序访问的局部性原理</code></strong></p>
+</blockquote>
+<p>由于程序访问的局部性原理,可以引入Cache, 使得CPU与Cache进行更加高速的数据交换, 解决CPU速度与主存速度不相匹配的矛盾.</p>
+<h2 id="Cache-工作原理"><a href="#Cache-工作原理" class="headerlink" title="Cache 工作原理"></a>Cache 工作原理</h2><p>假设主存地址有n位, 可知主存可编号的<strong>字</strong>为<strong>2^n</strong>个.<br>为了与Cache映射, 将主存与缓存都分为若干个 <strong>块</strong>, 每个快包含若干<strong>字</strong><br><strong>举例说明</strong>:<br>需要认识几点:</p>
+<ol>
+<li>设主存地址为4位 则主存内可以编号的字为 2^4 = 16 个</li>
+<li>将4个字作为一个 块</li>
+<li>因此: 主存中有 16/4 = 4 块, 每块4字 </li>
+<li>假设Cache可以容纳2块</li>
+<li>由于Cache块大小与主存的块的大小保持一致, 因此块也为4字</li>
+</ol>
+<p>主存地址4位, 可以用一串4位的二进制数来表示16个地址中的任意一个,如<code>0000</code>,<code>01001</code>等等,将4个字分为一组,需要2位二进制数字来区分一个块中的不同的4个字.</p>
+<p>于是将低2位用于区分块内不同的字, 高2位区分不同的块,对应关系如下:<br><img src="http://image18.poco.cn/mypoco/myphoto/20161013/11/18333124820161013112612070_640.jpg?302x345_120" alt="主存分块示意图"><br>如字4对应的地址是 0100, 那么它的块内地址为00, 主存块号为01<br>这样, 主存的分块就完成了.</p>
+<p>Cache分块也是一样的原理.</p>
+<p><img src="http://img18.poco.cn/mypoco/myphoto/20161013/15/18333124820161013153100047.jpg?335x187_120" alt="Cache分块示意图"></p>
+<p>假设:</p>
+<ol>
+<li>主存: 块内地址有b位, 主存块号有m位</li>
+<li>Cache: 块内地址有b位,Cache块号有c位</li>
+</ol>
+<p>则有下图所示关系:</p>
+<p><img src="http://img18.poco.cn/mypoco/myphoto/20161013/16/18333124820161013160414012.jpg?271x189_120" alt="n位地址主存地址结构"></p>
+<font color="red" size="5"><strong><code>错误更正:  注意上图中的B块应为B个字</code></strong></font>
+
+<p><img src="http://img18.poco.cn/mypoco/myphoto/20161013/16/1833312482016101316172302.jpg?273x166_120" alt="Cache对应的结构"></p>
+<blockquote>
+<font face="黑体" color="green">CPU欲读取主存某字时,有两种可能:一是所需要的字已经在缓存中,即可直接访问Cache;另一种是所需的字不在Cache内, 此时需要将该字所在的主存整个字块一次调入Cache中.<br></font>
+
+</blockquote>
+<p>由于Cache所能存储的块数远远小于主存的存储量,所以Cache的缓存块不能永久唯一的对应一个主存快,因此,需要为缓存块设置一个标记,用来表示当前存储的是哪一个主存快.<br>在下面的3中映射方法中,都会涉及到标记的构成.</p>
+<h2 id="1-直接映射"><a href="#1-直接映射" class="headerlink" title="1.直接映射"></a>1.直接映射</h2><p>在直接映射中, 主存和cache的映射关系为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">i = j mode C 或 i = j mod 2^c</div><div class="line">其中, i是Cache的块编号, j是主存的块编号</div></pre></td></tr></table></figure></p>
+<p>如果读者仔细阅读了Cache 工作原理一节, 那么很容易知道这两个公式是完全相同的,对于一个被划分为2^x的主存, 它的块需要用x位二进制编号, 对于Cache来说 C = 2^c = Cache的块数, 因此就出现了这两个公式.</p>
+<p>上述公式如果用自然语言表达的话, 可以表示为:<br>编号为j的主存块映射到Cache中, 那么需要映射到的Cache块的编号是j对Cache的总块数的余数</p>
+<p>假设Cache有2块,编号为0,1,主存有4块,编号为0 1 2 3, 那么主存块3映射到Cache的块编号为 <code>3 mod 2 = 1</code></p>
+<p><img src="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013170434092.jpg?162x193_12" alt="取余映射"></p>
+<p>从这里也可以看出Cache与主存块一对多的关系, 因此有必要为Cache添加主存标记,用以区分该块到底是对应着哪一块主存块.</p>
+<p>主存分块, 实际上是逻辑上的区分, 主存并没有真正的分为多少块, 对于主存来说, 访问它的内容就需要提供地址, 我们对地址的解析不同, 就在逻辑上对地址产生了不同的解释.</p>
+<p>例如对于一个有 <code>2^4 =16</code> 个字的主存, 表示它的地址需要一个4位的二进制数字,对于地址 0010 ,我们可以说, 这是该存储器的第1010个(第10个, 从0编号)存储字.而如果我们将这个主存每4个字分为一个块, 那么也可以把 1010分为两段, 高2位对块定址,低2位对块内字定址, 我们可以对 10 10 这样解释:<br>这是第 10 组(第2组)的第 10 个字(第2个字).<br>其实, 两种表示方法所表示的存储字是一样的.</p>
+<p>有了这样的理解之后, 我们再来看直接映射.<br>直接映射对主存地址作出如下图所示的理解:<br><img src="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013172349097.jpg?391x118_120" alt="直接映射的主存地址结构"></p>
+<p>其中 t+c = m, m表示若要表示任意主存块的地址所需要的二进制位数.</p>
+<p>虽然我们解析了主存的地址, 但是这些mtcb依然可能让人皱眉头, 这些数字从何而来, 如何计算又如何使用?</p>
+<p>下面就通过一个最简单的例子, 来搞清楚这些数字之间的联系.</p>
+<h3 id="直接映射的例子"><a href="#直接映射的例子" class="headerlink" title="直接映射的例子"></a>直接映射的例子</h3><p>条件描述:</p>
+<ol>
+<li>主存地址为4位</li>
+<li>取4字为1个字块</li>
+<li>Cache能容纳2个字块</li>
+</ol>
+<p>通过u这些我们能得出什么数据呢?</p>
+<ol>
+<li>主存地址为4位, 表示需要4位二进制数字来表示任意一个字的地址,从0000到1111</li>
+<li>主存一共拥有 2^4 = 16 个字</li>
+<li>按照条件2, 主存被分为 4 个块</li>
+<li>区分4个字需要两个二进制数字(从00到11)</li>
+<li>区分4个块需要两个而进制数字(从00到11)</li>
+</ol>
+<p>可以很清楚的知道, 主存的地址可以大致分为两个部分:低2位 和 高2位<br><img src="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013172349097.jpg?391x118_120" alt="直接映射的主存地址结构"><br>对于这个图来说:</p>
+<ol>
+<li>低<strong>2</strong>位就是图中的最后一部分 也就是字块内地址 这个 b就是<strong>2</strong></li>
+<li>高<strong>2</strong>位就是图中的前两部分的和, 这个 m( m = t +c) 就是<strong>2</strong></li>
+</ol>
+<p>由于直接映射采用的映射方法(取余公式), 每一块主存所对应的Cache是固定的, 因此对于上述例子来说, 只可能有以下两种情况:</p>
+<ol>
+<li>映射情况 1<br><img src="http://image18.poco.cn/mypoco/myphoto/20161014/11/18333124820161014114824048.jpg?588x343_120" alt=""></li>
+<li>映射情况 2<br><img src="http://img18.poco.cn/mypoco/myphoto/20161014/11/18333124820161014114900095.jpg?595x347_120" alt=""></li>
+</ol>
+<p>如果主存还有 块5块6的话, 自然是对应着Cache的块1块2了, 当然,对于一个4位地址的主存, 4字分为一块的话, 就只能分4块了, 不会出现5,6的情况</p>
+<p>那么,如何根据这个地址访问到对应的Cache块呢?<br>如果CPU欲访问 1010, 恰好映射情况是1, 那么显然就是未命中了, 如果是映射情况2的话, 就属于命中了.</p>
+<p>我们以命中为例.<br><img src="http://img18.poco.cn/mypoco/myphoto/20161013/17/18333124820161013172349097.jpg?391x118_120" alt="直接映射的主存地址结构"><br>CPU欲访问 1010, 因为4字一块,所以取低两位作为块内地址, b = 2;<br>Cache分两块, 需要一位2进制数字就可以区分, 所以以从左到右第二位做为Cache字块标记 c = 1;<br>剩下的第一位作为主存块标记t = 1;</p>
+<p>主存字块标记 = 1, 对于地址1xxx, 可知Cache的标记位中存储的应该是1,命中之后根据0访问Cache块号为0的块,根据10访问块内编号为10的字</p>
+<p>大致流程:</p>
+<font face="微软雅黑" ,="" color="green"><br>1. 在Cache与主存建立联系的时候, (例如映射情况2), Cache的字块标记就被填充为地址的前t位(1);<br>2. 硬件系统对CPU欲访问的地址解析, 知道前t位代表的是主存字块标记, 便将地址中提取出的t位数字的数值(1)与Cache的标记(1)进行比较, 如果相符合, 说明命中, 根据c位Cache字块标记(0)寻找Cache内指定编号的字块(编号为0),根据最后的b位(2位)字块内地址寻找到对应标号的字(编号为10的字).</font>
+
+<blockquote>
+<p>未完待续 2016/10/14 12:18:07 </p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/10/MS-SQL-Server-2014-Express-数据库软件下载/" itemprop="url">
                   MS SQL Server 2014 Express 数据库软件下载
                 </a>
@@ -333,381 +532,6 @@
               阅读全文 &raquo;
             </a>
           </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/10/计算机组成原理总结/" itemprop="url">
-                  计算机组成原理总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-10T10:53:02+08:00" content="2016-10-10">
-              2016-10-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/计算机组成原理/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机组成原理</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/10/计算机组成原理总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/10/计算机组成原理总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="汉明码传输纠错过程"><a href="#汉明码传输纠错过程" class="headerlink" title="汉明码传输纠错过程"></a>汉明码传输纠错过程</h3><h4 id="奇偶校验介绍"><a href="#奇偶校验介绍" class="headerlink" title="奇偶校验介绍"></a>奇偶校验介绍</h4><p>汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解<strong>奇偶校验</strong>问题.</p>
-<blockquote>
-<p>奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校验“1”的个数是否为奇数，从而确定传输代码的正确性。</p>
-</blockquote>
-<h4 id="偶校验示例"><a href="#偶校验示例" class="headerlink" title="偶校验示例"></a>偶校验示例</h4><p>待传输二进制串为 101101<br>在最后增加一位作为校验位<br>采用偶校验  </p>
-<p>101101_   : 原本的二进制串有4个1, 偶校验要求整个串1的个数为偶数,所以校验位填0<br>最终需要传输的数据为: 1011010<br>若接收方收到: 1011010 经检验有偶数个1 表示传输正确 去掉校验位,获得: 101101<br>若接收方收到: 1111010 经检验有奇数个1 表示传输错误!  </p>
-<h4 id="汉明码传输纠错示例"><a href="#汉明码传输纠错示例" class="headerlink" title="汉明码传输纠错示例"></a>汉明码传输纠错示例</h4><p>汉明码需要在原串的基础上增加若干位, 假设原串有n位, 需要增加K位, n 和 k 满足一下条件(k取小):<br>2^k &gt;= n + k + 1<br>下表列出了代码长度与检测位长度之间的关系:  </p>
-<table>
-<thead>
-<tr>
-<th>n</th>
-<th style="text-align:right">k(最小)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td style="text-align:right">2</td>
-</tr>
-<tr>
-<td>2~4</td>
-<td style="text-align:right">3</td>
-</tr>
-<tr>
-<td>5~11</td>
-<td style="text-align:right">4</td>
-</tr>
-<tr>
-<td>12~26</td>
-<td style="text-align:right">5</td>
-</tr>
-<tr>
-<td>27~57</td>
-<td style="text-align:right">6</td>
-</tr>
-<tr>
-<td>58~120</td>
-<td style="text-align:right">7</td>
-</tr>
-</tbody>
-</table>
-<p>最终形成的代码为 n+k 位<br>以<strong>1011</strong>为例子,<strong>1011</strong>为<strong>4</strong>位,那么<strong>k=3</strong>,则需要传输的位数为<strong>7</strong><br><strong>安插检测位,构成目标串</strong><br>这n+k位的二进制数字中,有k位检验位,这些位在数字中的哪些地方呢?<br>如果把这串数字从左到右从1开始进行编号,那么这些校验位的位置分别是第 1,2,4,8,16,32…..位,写作C1,C2,C4,C8…..(1 2 4 8…为下标)</p>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">C1</td>
-<td style="text-align:center">C2</td>
-<td style="text-align:center">a</td>
-<td style="text-align:center">C4</td>
-<td style="text-align:center">b</td>
-<td style="text-align:center">c</td>
-<td style="text-align:center">d</td>
-</tr>
-</tbody>
-</table>
-<p>其中,a b c d,是原串,仍按上述示例,则表为</p>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">C1</td>
-<td style="text-align:center">C2</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">C4</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p><strong>确定检测位的数值</strong><br>C1 由1,3,5,7,9,11…..位进行奇偶校验,作为校验位从而确定数值<br>C2 由2,3,6,7,10,11,14,15..  确定<br>C4 由4,5,6,7,12,13,14,15..  确定<br>C8 由8,9,10,11,12,13,14,15,24… 确定<br>其规律是:<br>Cn 的校验序列是以n开始,连续n位,跳过n位,再连续n位,再跳过n为…..  构成<br>例如:<br>C2 由2开始 连续2位,2,3,跳过4,5,连续2位,6,7,跳过8,9,连续两位10,11…</p>
-<p>例如</p>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">C1</td>
-<td style="text-align:center">C2</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">C4</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p>C1 与 3, 5, 7位进行偶校验(是奇校验还是偶校验题目中会给出)<br>C1 1 0 1 偶校验 C1 为 0<br>C2 与 3, 6, 7<br>C2 1 1 1 偶校验 C2 为 1<br>C4 与 5, 6, 7<br>C4 0 1 1 偶校验 C4 为 0</p>
-<p>则  </p>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p>则需要传输的代码是: 0110011</p>
-<p>如果接受方接受的代码为 0110011<br>在Cn位置依然按照上边的奇偶校验规则校验(这个例子是偶校验)</p>
-<p>除了数1的个数,还可以用对应位的亦或运算来得出是否符合校验<br>在偶校验中,有偶数个1,因此亦或得到的结果,如符合偶校验应该是<strong>0</strong>,否则为<strong>1</strong><br>在奇校验中,有奇数个1,因此亦或得到的结果,如符合奇校验应该是<strong>1</strong>,否则为<strong>0</strong></p>
-<blockquote>
-<p>亦或性质: 奇数个1亦或得1 偶数个1亦或得0 x亦或0得x</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td>-</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">原串</td>
-</tr>
-<tr>
-<td>是否符合偶校验</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">-</td>
-</tr>
-</tbody>
-</table>
-<p>如果接受方接受的代码为 0110111</p>
-<table>
-<thead>
-<tr>
-<th>二进制串序号</th>
-<th style="text-align:center">1</th>
-<th style="text-align:center">2</th>
-<th style="text-align:center">3</th>
-<th style="text-align:center">4</th>
-<th style="text-align:center">5</th>
-<th style="text-align:center">6</th>
-<th style="text-align:center">7</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>名称</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td>-</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">校验</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">原串</td>
-<td style="text-align:center">原串</td>
-</tr>
-<tr>
-<td>是否符合偶校验</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center">-</td>
-</tr>
-</tbody>
-</table>
-<p>(Pn 采用 Cn的校验序列参与运算)<br>P1 = 1  亦或 3  亦或 5  亦或 7 = 1 错误!<br>P2 = 2  亦或 3  有货 6  亦或 7 = 0 正确!<br>P4 = 4  亦或 5  亦或 6  亦或 7 = 1 错误!</p>
-<p>2 3 6 7位正确<br>P1表示 1 或 5 可能错误<br>P4表示 4 或 5 可能错误<br>根据一位纠错能力,可知 第5位 出现错误!</p>
-<p>将第五位修改,0110111 -&gt; 0110011 去除 1 2 4位,得到 <strong>1011</strong> , 纠错完成!</p>
-<blockquote>
-<p>请参考&lt;&lt;计算机组成原理&gt;&gt;第100页的例子对0101的汉明码纠错示例再次进行实验,验证该方法</p>
-</blockquote>
-
-          
         
       
     </div>
@@ -1783,7 +1607,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
