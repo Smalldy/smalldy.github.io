@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://blog.smalldy.xyz/2016/10/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-Cache-%E4%B8%BB%E5%AD%98%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/</loc>
+    <lastmod>2016-10-15T07:55:12.122Z</lastmod>
+    <data>
+        <display>
+        <title>计算机组成原理:Cache--主存地址映射</title>
+        <pubTime>2016-10-12T14:50:30.000Z</pubTime>
+        
+        <tag>计算机组成原理</tag>
+         
+        <tag>Cache</tag>
+         
+        <tag>地址映射</tag>
+         
+         
+           
+             
+              <breadCrumb title="计算机组成原理" url="http://blog.smalldy.xyz/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.smalldy.xyz/2016/10/15/%E7%BB%88%E4%BA%8E%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F%E7%9A%84%E6%8A%A5%E9%94%99/</loc>
     <lastmod>2016-10-15T05:09:23.958Z</lastmod>
     <data>
@@ -34,30 +58,6 @@
         <tag>计算机组成原理</tag>
          
         <tag>汉明码</tag>
-         
-         
-           
-             
-              <breadCrumb title="计算机组成原理" url="http://blog.smalldy.xyz/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.smalldy.xyz/2016/10/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-Cache-%E4%B8%BB%E5%AD%98%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84/</loc>
-    <lastmod>2016-10-14T14:12:21.589Z</lastmod>
-    <data>
-        <display>
-        <title>计算机组成原理:Cache--主存地址映射</title>
-        <pubTime>2016-10-12T14:50:30.000Z</pubTime>
-        
-        <tag>计算机组成原理</tag>
-         
-        <tag>Cache</tag>
-         
-        <tag>地址映射</tag>
          
          
            
