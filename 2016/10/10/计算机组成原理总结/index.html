@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="计算机组成原理," />
+  <meta name="keywords" content="计算机组成原理,汉明码," />
 
 
 
@@ -90,15 +90,15 @@
 
 奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机组成原理总结">
-<meta property="og:url" content="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/index.html">
+<meta property="og:title" content="计算机组成原理: 汉明码">
+<meta property="og:url" content="http://blog.smalldy.xyz/2016/10/10/计算机组成原理总结/index.html">
 <meta property="og:site_name" content="Smalldy 's blog">
 <meta property="og:description" content="汉明码传输纠错过程奇偶校验介绍汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解奇偶校验问题.
 
 奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
-<meta property="og:updated_time" content="2016-10-10T14:19:35.552Z">
+<meta property="og:updated_time" content="2016-10-15T04:57:49.142Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="计算机组成原理总结">
+<meta name="twitter:title" content="计算机组成原理: 汉明码">
 <meta name="twitter:description" content="汉明码传输纠错过程奇偶校验介绍汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解奇偶校验问题.
 
 奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校">
@@ -122,9 +122,9 @@
 
 
 
-  <link rel="canonical" href="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/"/>
+  <link rel="canonical" href="http://blog.smalldy.xyz/2016/10/10/计算机组成原理总结/"/>
 
-  <title> 计算机组成原理总结 | Smalldy 's blog </title>
+  <title> 计算机组成原理: 汉明码 | Smalldy 's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -207,6 +207,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -264,7 +274,7 @@
             
             
               
-                计算机组成原理总结
+                计算机组成原理: 汉明码
               
             
           </h1>
@@ -330,13 +340,14 @@
       
 
       
-        <h3 id="汉明码传输纠错过程"><a href="#汉明码传输纠错过程" class="headerlink" title="汉明码传输纠错过程"></a>汉明码传输纠错过程</h3><h4 id="奇偶校验介绍"><a href="#奇偶校验介绍" class="headerlink" title="奇偶校验介绍"></a>奇偶校验介绍</h4><p>汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解<strong>奇偶校验</strong>问题.</p>
+        <h2 id="汉明码传输纠错过程"><a href="#汉明码传输纠错过程" class="headerlink" title="汉明码传输纠错过程"></a>汉明码传输纠错过程</h2><h3 id="奇偶校验介绍"><a href="#奇偶校验介绍" class="headerlink" title="奇偶校验介绍"></a>奇偶校验介绍</h3><p>汉明码具有一位纠错能力,在了解汉明码如何生成和纠错之前,需要了解<strong>奇偶校验</strong>问题.</p>
 <blockquote>
 <p>奇偶校验是一种校验代码传输正确性的方法,根据被传输的一组二进制代码的数位中“1”的个数是奇数或偶数来进行校验。采用奇数的称为奇校验，反之，称为偶校验。采用何种校验是事先规定好的。通常专门设置一个奇偶校验位，用它使这组代码中“1”的个数为奇数或偶数。若用奇校验，则当接收端收到这组代码时，校验“1”的个数是否为奇数，从而确定传输代码的正确性。</p>
 </blockquote>
-<h4 id="偶校验示例"><a href="#偶校验示例" class="headerlink" title="偶校验示例"></a>偶校验示例</h4><p>待传输二进制串为 101101<br>在最后增加一位作为校验位<br>采用偶校验  </p>
+<a id="more"></a>
+<h3 id="偶校验示例"><a href="#偶校验示例" class="headerlink" title="偶校验示例"></a>偶校验示例</h3><p>待传输二进制串为 101101<br>在最后增加一位作为校验位<br>采用偶校验  </p>
 <p>101101_   : 原本的二进制串有4个1, 偶校验要求整个串1的个数为偶数,所以校验位填0<br>最终需要传输的数据为: 1011010<br>若接收方收到: 1011010 经检验有偶数个1 表示传输正确 去掉校验位,获得: 101101<br>若接收方收到: 1111010 经检验有奇数个1 表示传输错误!  </p>
-<h4 id="汉明码传输纠错示例"><a href="#汉明码传输纠错示例" class="headerlink" title="汉明码传输纠错示例"></a>汉明码传输纠错示例</h4><p>汉明码需要在原串的基础上增加若干位, 假设原串有n位, 需要增加K位, n 和 k 满足一下条件(k取小):<br>2^k &gt;= n + k + 1<br>下表列出了代码长度与检测位长度之间的关系:  </p>
+<h3 id="汉明码传输纠错示例"><a href="#汉明码传输纠错示例" class="headerlink" title="汉明码传输纠错示例"></a>汉明码传输纠错示例</h3><p>汉明码需要在原串的基础上增加若干位, 假设原串有n位, 需要增加K位, n 和 k 满足一下条件(k取小):<br>2^k &gt;= n + k + 1<br>下表列出了代码长度与检测位长度之间的关系:  </p>
 <table>
 <thead>
 <tr>
@@ -610,6 +621,8 @@
           
             <a href="/tags/计算机组成原理/" rel="tag">#计算机组成原理</a>
           
+            <a href="/tags/汉明码/" rel="tag">#汉明码</a>
+          
         </div>
       
 
@@ -642,43 +655,24 @@
 
     <div class="post-spread">
       
-        
-  <div class="bdsharebuttonbox">
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
-    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
-    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
-    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
-    <a href="#" class="bds_more" data-cmd="more"></a>
-    <a class="bds_count" data-cmd="count"></a>
+        <div class="ds-share flat" data-thread-key="2016/10/10/计算机组成原理总结/"
+     data-title="计算机组成原理: 汉明码"
+     data-content=""
+     data-url="http://blog.smalldy.xyz/2016/10/10/计算机组成原理总结/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
   </div>
-  <script>
-    window._bd_share_config = {
-      "common": {
-        "bdText": "",
-        "bdMini": "2",
-        "bdMiniList": false,
-        "bdPic": ""
-      },
-      "share": {
-        "bdSize": "16",
-        "bdStyle": "0"
-      },
-      "image": {
-        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
-        "viewText": "分享到：",
-        "viewSize": "16"
-      }
-    }
-  </script>
-
-<script>
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-
+</div>
       
     </div>
   </div>
@@ -692,7 +686,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/10/10/计算机组成原理总结/"
-           data-title="计算机组成原理总结" data-url="http://smalldy.coding.me/2016/10/10/计算机组成原理总结/">
+           data-title="计算机组成原理: 汉明码" data-url="http://blog.smalldy.xyz/2016/10/10/计算机组成原理总结/">
       </div>
     
   </div>
@@ -737,7 +731,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -754,7 +748,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -804,7 +798,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#汉明码传输纠错过程"><span class="nav-number">1.</span> <span class="nav-text">汉明码传输纠错过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#奇偶校验介绍"><span class="nav-number">1.1.</span> <span class="nav-text">奇偶校验介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#偶校验示例"><span class="nav-number">1.2.</span> <span class="nav-text">偶校验示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#汉明码传输纠错示例"><span class="nav-number">1.3.</span> <span class="nav-text">汉明码传输纠错示例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#汉明码传输纠错过程"><span class="nav-number">1.</span> <span class="nav-text">汉明码传输纠错过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#奇偶校验介绍"><span class="nav-number">1.1.</span> <span class="nav-text">奇偶校验介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偶校验示例"><span class="nav-number">1.2.</span> <span class="nav-text">偶校验示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#汉明码传输纠错示例"><span class="nav-number">1.3.</span> <span class="nav-text">汉明码传输纠错示例</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
