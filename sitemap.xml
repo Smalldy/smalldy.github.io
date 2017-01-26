@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.smalldy.xyz/2017/01/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81-%E6%B0%94%E8%B1%A1%E7%AB%99/</loc>
+    
+    <lastmod>2017-01-26T15:03:53.880Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.smalldy.xyz/2017/01/26/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2017-01-26T14:53:06.697Z</lastmod>
@@ -58,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://blog.smalldy.xyz/about/css/style.css</loc>
+    <loc>http://blog.smalldy.xyz/about/js/prefixfree.min.js</loc>
     
     <lastmod>2016-08-19T22:59:20.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.smalldy.xyz/about/js/prefixfree.min.js</loc>
+    <loc>http://blog.smalldy.xyz/about/css/style.css</loc>
     
     <lastmod>2016-08-19T22:59:20.000Z</lastmod>
     
