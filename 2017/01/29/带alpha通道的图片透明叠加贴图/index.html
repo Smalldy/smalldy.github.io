@@ -1,0 +1,709 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="图形图像,透明贴图,ege,putimage_withalpha," />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="Smalldy 's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近想要使用ege图形引擎做点东西, 对ege不是很熟悉的我, 只是一遍实验一边推进, 不过实验的过程中, 出现了一个小插曲, 那就是ege的putimage_withalpha函数, 出现了bug,  我们可以很迅速的重现这个bug~.1234getimage_pngfile(img1,&quot;1.png&quot;);getimage_pngfile(img2,&quot;2.png&quot;);putimage_withal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带alpha通道的图片透明叠加贴图">
+<meta property="og:url" content="http://blog.smalldy.xyz/2017/01/29/带alpha通道的图片透明叠加贴图/index.html">
+<meta property="og:site_name" content="Smalldy 's blog">
+<meta property="og:description" content="最近想要使用ege图形引擎做点东西, 对ege不是很熟悉的我, 只是一遍实验一边推进, 不过实验的过程中, 出现了一个小插曲, 那就是ege的putimage_withalpha函数, 出现了bug,  我们可以很迅速的重现这个bug~.1234getimage_pngfile(img1,&quot;1.png&quot;);getimage_pngfile(img2,&quot;2.png&quot;);putimage_withal">
+<meta property="og:updated_time" content="2017-01-28T23:27:14.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="带alpha通道的图片透明叠加贴图">
+<meta name="twitter:description" content="最近想要使用ege图形引擎做点东西, 对ege不是很熟悉的我, 只是一遍实验一边推进, 不过实验的过程中, 出现了一个小插曲, 那就是ege的putimage_withalpha函数, 出现了bug,  我们可以很迅速的重现这个bug~.1234getimage_pngfile(img1,&quot;1.png&quot;);getimage_pngfile(img2,&quot;2.png&quot;);putimage_withal">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.smalldy.xyz/2017/01/29/带alpha通道的图片透明叠加贴图/"/>
+
+  <title> 带alpha通道的图片透明叠加贴图 | Smalldy 's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6e0a0c8bf52bc0c329169df8b962fb68";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Smalldy 's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">技术宅拯救世界</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                带alpha通道的图片透明叠加贴图
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-29T06:26:56+08:00" content="2017-01-29">
+              2017-01-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/graphics/" itemprop="url" rel="index">
+                    <span itemprop="name">graphics</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/29/带alpha通道的图片透明叠加贴图/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/29/带alpha通道的图片透明叠加贴图/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近想要使用ege图形引擎做点东西, 对ege不是很熟悉的我, 只是一遍实验一边推进, 不过实验的过程中, 出现了一个小插曲, 那就是ege的putimage_withalpha函数, 出现了bug,  我们可以很迅速的重现这个bug~.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">getimage_pngfile(img1,<span class="string">"1.png"</span>);</div><div class="line">getimage_pngfile(img2,<span class="string">"2.png"</span>);</div><div class="line">putimage_withalpha(img1,img2,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">putimage_withalpha(<span class="literal">NULL</span>,img1,<span class="number">0</span>,<span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>窗口上就会呈现一片黑色. 某大佬说ege没有正确处理底图透明的情况. 不过看起来总之是alpha值计算的问题了.</p>
+<h2 id="RGBA"><a href="#RGBA" class="headerlink" title="RGBA"></a>RGBA</h2><p>RGB都知道, A就是不透明度, 为什么说是不透明度呢, 因为A值越高, 就越呈现为不透明.<br>不透明度有的用百分数表示(0到1), 有的是0到255(ege采用这种方式).</p>
+<p>在SDL的文档中, 我找到了这样的公式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SDL_BLENDMODE_BLEND : alpha blending</div><div class="line">	dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA))</div><div class="line">	dstA = srcA + (dstA * (1-srcA))</div></pre></td></tr></table></figure></p>
+<p>很显然, alpha的作用就是决定混合后,混合的两种颜色要按怎样的比例呈现.SDL中的这个A值, 是按0到1计算的, 转换化成255的形式, 再借用ege的相关操作函数, 可以写出如下函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ege::color_t colorAlphaBlend(ege::color_t colSrc, ege::color_t colDst)&#123;</div><div class="line">    return EGERGBA(</div><div class="line">        (int)( EGEGET_R(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_R(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( EGEGET_G(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_G(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( EGEGET_B(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_B(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( 255             *(EGEGET_A(colSrc)/255.0)+EGEGET_A(colDst)*(1-EGEGET_A(colSrc)/255.0) )</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="矩形相交"><a href="#矩形相交" class="headerlink" title="矩形相交"></a>矩形相交</h2><p>解决了透明叠加的问题, 就可以很容易的实现两张等大的图像进行透明叠加, 只要把对应的像素值进行透明叠加计算, 然后传递给目标图像就可以了, 但是, putimage_withalpha函数的功能不仅仅限于此, 或者说, 我们的需求也不会这么简单, 我们希望可以截取源图像的任意一部分, 贴到目标图像上的任意一个坐标点上. 这就需要用一个矩形去选择源图像(仿佛是一个剪裁的操作), 然后还要知道源图像和目标图像的哪部分像素要参与计算(可以转换为两个矩形相交求出相交部分矩形的问题), 查阅相关资料之后, 了解了矩形相交的判断方法:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">minx   =   max(minx1,   minx2)  </div><div class="line">miny   =   max(miny1,   miny2)  </div><div class="line">maxx   =   min(maxx1,   maxx2)  </div><div class="line">maxy   =   min(maxy1,   maxy2)</div></pre></td></tr></table></figure></p>
+<p>如果min &gt; max则为不相交.</p>
+<p>由于参数汇总由x y 和width heightu确定一个矩形, 因此将上述公式作如下变换:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">假设有矩形:</div><div class="line">RECT1</div><div class="line">minx1</div><div class="line">miny1</div><div class="line">maxx1  = minx1+width1  - 1</div><div class="line">maxy1  = miny1+height1 - 1</div><div class="line"></div><div class="line">RECT2</div><div class="line">minx2</div><div class="line">miny2</div><div class="line">maxx2 = minx2+width2  -  1</div><div class="line">maxy2 = miny2+height2 -  1</div><div class="line">//----------------------------------------------------------------------</div><div class="line">    minx   =   max(minx1,   minx2) </div><div class="line">    miny   =   max(miny1,   miny2) </div><div class="line">    maxx   =   min(minx1+width1  - 1,   minx2+width2  -  1) </div><div class="line">    maxy   =   min(miny1+height1 - 1,   miny2+height2 -  1)</div><div class="line">    width  =   min(minx1+width1  - 1,   minx2+width2  -  1) - max(minx1,   minx2) + 1</div><div class="line">    height =   min(miny1+height1 - 1,   miny2+height2 -  1) - max(miny1,   miny2) + 1</div><div class="line">//-------------------------------------------------------------------------</div><div class="line">    minx   =   max(minx1,   minx2) </div><div class="line">    miny   =   max(miny1,   miny2) </div><div class="line">    width  =   min(minx1+width1  ,   minx2+width2  ) - max(minx1,   minx2)</div><div class="line">    height =   min(miny1+height1 ,   miny2+height2 ) - max(miny1,   miny2) </div><div class="line"> ---------------------------------------------------------------------------</div><div class="line"> x = max(x1,x2);</div><div class="line"> y = max(y1,y2);</div><div class="line"> width = min(x1+width1 , x2+widht2 ) - x;</div><div class="line"> height= min(y1+height1, y2+geight2) - y;</div></pre></td></tr></table></figure></p>
+<p>至此, 矩形相交问题解决!</p>
+<h2 id="重写函数"><a href="#重写函数" class="headerlink" title="重写函数"></a>重写函数</h2><blockquote>
+<p>ege用color_t存储一个像素信息,  实际上是一个32位整形, ARGB分别占8位</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 带透明通道贴图函数的修复</div><div class="line">* 说明:</div><div class="line">*   ege函数putimage_withalpha存在一个bug, 就是将一张带透明通道的图像贴到另一张带透明</div><div class="line">*   通道的图像上时, 会导致alpha值混乱, 可能是该函数没有正确的计算alpha值(据说时没有考虑</div><div class="line">*   底图的alpha值), 因此, 我重写了这个函数, 借用SDL文档上的叠加模式计算方法, 实现了这个</div><div class="line">*   功能, 本函数使用了矩形相交算法, 容错性"可能"比原函数要强(最后四个参数只要和图片相交</div><div class="line">*   就能选出对应的像素从而进行计算, 原版函数xSrc ySrc要是负数的话就是一片黑),最后, 这个</div><div class="line">*   函数还需要跟多测试, 如果存在bug, 请联系我修改~~  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* RBGA透明叠加颜色计算方法</div><div class="line">*/</div><div class="line">ege::<span class="keyword">color_t</span> colorAlphaBlend(ege::<span class="keyword">color_t</span> colSrc, ege::<span class="keyword">color_t</span> colDst)&#123;</div><div class="line">    <span class="keyword">return</span> EGERGBA(</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_R(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_R(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_G(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_G(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_B(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_B(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( <span class="number">255</span>             *(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_A(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) )</div><div class="line">    );</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* putiamge_withalpha</div><div class="line">* 参数:</div><div class="line">*   imgDst: 目标图像</div><div class="line">*   ingSrc: 源图像</div><div class="line">*   xDst,yDst: 在目标图像上绘制的起始点, 可以在图像外取点</div><div class="line">*   xSrc,ySrc,widthSrc,heightSrc, 源图像选区框, 四个参数形成一个矩形, 选区源图像的区域,选</div><div class="line">*      中部分为图像与矩形框相交部分</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">putimage_withalpha2</span><span class="params">(ege::PIMAGE imgDst, ege::PIMAGE imgSrc, <span class="keyword">int</span> xDst, <span class="keyword">int</span> yDst, <span class="keyword">int</span> xSrc = <span class="number">0</span>, <span class="keyword">int</span> ySrc = <span class="number">0</span>, <span class="keyword">int</span> widthSrc =<span class="number">0</span>, <span class="keyword">int</span> heightSrc = <span class="number">0</span>)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(imgDst == <span class="literal">NULL</span>)&#123;</div><div class="line">        ege::putimage_withalpha(<span class="literal">NULL</span>,imgSrc,xDst,yDst,xSrc,ySrc,widthSrc,heightSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(widthSrc==<span class="number">0</span>)&#123;</div><div class="line">        widthSrc = ege::getwidth(imgSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(heightSrc == <span class="number">0</span>)&#123;</div><div class="line">        heightSrc = ege::getheight(imgSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> widthDst = ege::getwidth(imgDst);</div><div class="line">    <span class="keyword">int</span> heightDst = ege::getheight(imgDst);</div><div class="line">    <span class="comment">//矩形选框与源图形矩形相交 得出选中源矩形</span></div><div class="line">    xSrc = max(<span class="number">0</span>,xSrc);</div><div class="line">    ySrc = max(<span class="number">0</span>,ySrc);</div><div class="line">    widthSrc = min(ege::getwidth(imgSrc) , widthSrc ) - xSrc;</div><div class="line">    heightSrc= min(ege::getheight(imgSrc), heightSrc) - ySrc;</div><div class="line">    <span class="keyword">if</span>(widthSrc&lt;=<span class="number">0</span> || heightSrc&lt;=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//cout &lt;&lt; "源矩形" &lt;&lt; xSrc &lt;&lt; " " &lt;&lt; ySrc &lt;&lt;" " &lt;&lt; widthSrc &lt;&lt; " " &lt;&lt; heightSrc  &lt;&lt; endl;</span></div><div class="line">    <span class="comment">//将该矩形平移到目标矩形xDst yDst处 并求相交矩形在dst上的坐标信息</span></div><div class="line">    <span class="keyword">int</span> x = max(<span class="number">0</span>,xDst);</div><div class="line">    <span class="keyword">int</span> y = max(<span class="number">0</span>,yDst);</div><div class="line">    <span class="keyword">int</span> width = min(widthDst ,xDst+widthSrc )-x;</div><div class="line">    <span class="keyword">int</span> height= min(heightDst,yDst+heightSrc)-y;</div><div class="line">    <span class="keyword">if</span>(width&lt;=<span class="number">0</span>||height&lt;=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-2</span>;</div><div class="line">    &#125;</div><div class="line">   <span class="comment">// cout &lt;&lt; "绘制矩形" &lt;&lt; x &lt;&lt; " " &lt;&lt; y &lt;&lt;" " &lt;&lt; width &lt;&lt; " " &lt;&lt; height  &lt;&lt; endl;</span></div><div class="line">    <span class="comment">// 得出目标矩形之后 开始运算颜色信息</span></div><div class="line">    ege::<span class="keyword">color_t</span> * srcbuf = ege::getbuffer(imgSrc) + (ege::getwidth(imgSrc)*ySrc+xSrc);</div><div class="line">    ege::<span class="keyword">color_t</span> * dstbuf = ege::getbuffer(imgDst) + (ege::getwidth(imgDst)*y+x);</div><div class="line">    <span class="keyword">int</span> increaseSrc = ege::getwidth(imgSrc);</div><div class="line">    <span class="keyword">int</span> increaseDst = ege::getwidth(imgDst);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; height; i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; width; j++)&#123;</div><div class="line">            ege::<span class="keyword">color_t</span> src = *(srcbuf+j);</div><div class="line">            ege::<span class="keyword">color_t</span> dst = *(dstbuf+j);</div><div class="line">            *(dstbuf+j) =  colorAlphaBlend(src,dst);</div><div class="line">        &#125;</div><div class="line">        srcbuf += increaseSrc;</div><div class="line">        dstbuf += increaseDst;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/图形图像/" rel="tag">#图形图像</a>
+          
+            <a href="/tags/透明贴图/" rel="tag">#透明贴图</a>
+          
+            <a href="/tags/ege/" rel="tag">#ege</a>
+          
+            <a href="/tags/putimage-withalpha/" rel="tag">#putimage_withalpha</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/26/设计模式之观察者模式示例代码-气象站/" rel="next" title="设计模式之观察者模式示例代码:气象站">
+                <i class="fa fa-chevron-left"></i> 设计模式之观察者模式示例代码:气象站
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/29/带alpha通道的图片透明叠加贴图/"
+     data-title="带alpha通道的图片透明叠加贴图"
+     data-content=""
+     data-url="http://blog.smalldy.xyz/2017/01/29/带alpha通道的图片透明叠加贴图/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/29/带alpha通道的图片透明叠加贴图/"
+           data-title="带alpha通道的图片透明叠加贴图" data-url="http://blog.smalldy.xyz/2017/01/29/带alpha通道的图片透明叠加贴图/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Smalldy" />
+          <p class="site-author-name" itemprop="name">Smalldy</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.josephcz.win/" title="Joseph's blog" target="_blank">Joseph's blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.noxue.com/" title="不学网~不只是学习" target="_blank">不学网~不只是学习</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RGBA"><span class="nav-number">1.</span> <span class="nav-text">RGBA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩形相交"><span class="nav-number">2.</span> <span class="nav-text">矩形相交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重写函数"><span class="nav-number">3.</span> <span class="nav-text">重写函数</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Smalldy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"smalldy"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

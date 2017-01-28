@@ -267,6 +267,138 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/29/带alpha通道的图片透明叠加贴图/" itemprop="url">
+                  带alpha通道的图片透明叠加贴图
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-29T06:26:56+08:00" content="2017-01-29">
+              2017-01-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/graphics/" itemprop="url" rel="index">
+                    <span itemprop="name">graphics</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/29/带alpha通道的图片透明叠加贴图/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/29/带alpha通道的图片透明叠加贴图/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近想要使用ege图形引擎做点东西, 对ege不是很熟悉的我, 只是一遍实验一边推进, 不过实验的过程中, 出现了一个小插曲, 那就是ege的putimage_withalpha函数, 出现了bug,  我们可以很迅速的重现这个bug~.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">getimage_pngfile(img1,<span class="string">"1.png"</span>);</div><div class="line">getimage_pngfile(img2,<span class="string">"2.png"</span>);</div><div class="line">putimage_withalpha(img1,img2,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">putimage_withalpha(<span class="literal">NULL</span>,img1,<span class="number">0</span>,<span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>窗口上就会呈现一片黑色. 某大佬说ege没有正确处理底图透明的情况. 不过看起来总之是alpha值计算的问题了.</p>
+<h2 id="RGBA"><a href="#RGBA" class="headerlink" title="RGBA"></a>RGBA</h2><p>RGB都知道, A就是不透明度, 为什么说是不透明度呢, 因为A值越高, 就越呈现为不透明.<br>不透明度有的用百分数表示(0到1), 有的是0到255(ege采用这种方式).</p>
+<p>在SDL的文档中, 我找到了这样的公式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SDL_BLENDMODE_BLEND : alpha blending</div><div class="line">	dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA))</div><div class="line">	dstA = srcA + (dstA * (1-srcA))</div></pre></td></tr></table></figure></p>
+<p>很显然, alpha的作用就是决定混合后,混合的两种颜色要按怎样的比例呈现.SDL中的这个A值, 是按0到1计算的, 转换化成255的形式, 再借用ege的相关操作函数, 可以写出如下函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ege::color_t colorAlphaBlend(ege::color_t colSrc, ege::color_t colDst)&#123;</div><div class="line">    return EGERGBA(</div><div class="line">        (int)( EGEGET_R(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_R(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( EGEGET_G(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_G(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( EGEGET_B(colSrc)*(EGEGET_A(colSrc)/255.0)+EGEGET_B(colDst)*(1-EGEGET_A(colSrc)/255.0) ),</div><div class="line">        (int)( 255             *(EGEGET_A(colSrc)/255.0)+EGEGET_A(colDst)*(1-EGEGET_A(colSrc)/255.0) )</div><div class="line">    );</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="矩形相交"><a href="#矩形相交" class="headerlink" title="矩形相交"></a>矩形相交</h2><p>解决了透明叠加的问题, 就可以很容易的实现两张等大的图像进行透明叠加, 只要把对应的像素值进行透明叠加计算, 然后传递给目标图像就可以了, 但是, putimage_withalpha函数的功能不仅仅限于此, 或者说, 我们的需求也不会这么简单, 我们希望可以截取源图像的任意一部分, 贴到目标图像上的任意一个坐标点上. 这就需要用一个矩形去选择源图像(仿佛是一个剪裁的操作), 然后还要知道源图像和目标图像的哪部分像素要参与计算(可以转换为两个矩形相交求出相交部分矩形的问题), 查阅相关资料之后, 了解了矩形相交的判断方法:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">minx   =   max(minx1,   minx2)  </div><div class="line">miny   =   max(miny1,   miny2)  </div><div class="line">maxx   =   min(maxx1,   maxx2)  </div><div class="line">maxy   =   min(maxy1,   maxy2)</div></pre></td></tr></table></figure></p>
+<p>如果min &gt; max则为不相交.</p>
+<p>由于参数汇总由x y 和width heightu确定一个矩形, 因此将上述公式作如下变换:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">假设有矩形:</div><div class="line">RECT1</div><div class="line">minx1</div><div class="line">miny1</div><div class="line">maxx1  = minx1+width1  - 1</div><div class="line">maxy1  = miny1+height1 - 1</div><div class="line"></div><div class="line">RECT2</div><div class="line">minx2</div><div class="line">miny2</div><div class="line">maxx2 = minx2+width2  -  1</div><div class="line">maxy2 = miny2+height2 -  1</div><div class="line">//----------------------------------------------------------------------</div><div class="line">    minx   =   max(minx1,   minx2) </div><div class="line">    miny   =   max(miny1,   miny2) </div><div class="line">    maxx   =   min(minx1+width1  - 1,   minx2+width2  -  1) </div><div class="line">    maxy   =   min(miny1+height1 - 1,   miny2+height2 -  1)</div><div class="line">    width  =   min(minx1+width1  - 1,   minx2+width2  -  1) - max(minx1,   minx2) + 1</div><div class="line">    height =   min(miny1+height1 - 1,   miny2+height2 -  1) - max(miny1,   miny2) + 1</div><div class="line">//-------------------------------------------------------------------------</div><div class="line">    minx   =   max(minx1,   minx2) </div><div class="line">    miny   =   max(miny1,   miny2) </div><div class="line">    width  =   min(minx1+width1  ,   minx2+width2  ) - max(minx1,   minx2)</div><div class="line">    height =   min(miny1+height1 ,   miny2+height2 ) - max(miny1,   miny2) </div><div class="line"> ---------------------------------------------------------------------------</div><div class="line"> x = max(x1,x2);</div><div class="line"> y = max(y1,y2);</div><div class="line"> width = min(x1+width1 , x2+widht2 ) - x;</div><div class="line"> height= min(y1+height1, y2+geight2) - y;</div></pre></td></tr></table></figure></p>
+<p>至此, 矩形相交问题解决!</p>
+<h2 id="重写函数"><a href="#重写函数" class="headerlink" title="重写函数"></a>重写函数</h2><blockquote>
+<p>ege用color_t存储一个像素信息,  实际上是一个32位整形, ARGB分别占8位</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 带透明通道贴图函数的修复</div><div class="line">* 说明:</div><div class="line">*   ege函数putimage_withalpha存在一个bug, 就是将一张带透明通道的图像贴到另一张带透明</div><div class="line">*   通道的图像上时, 会导致alpha值混乱, 可能是该函数没有正确的计算alpha值(据说时没有考虑</div><div class="line">*   底图的alpha值), 因此, 我重写了这个函数, 借用SDL文档上的叠加模式计算方法, 实现了这个</div><div class="line">*   功能, 本函数使用了矩形相交算法, 容错性"可能"比原函数要强(最后四个参数只要和图片相交</div><div class="line">*   就能选出对应的像素从而进行计算, 原版函数xSrc ySrc要是负数的话就是一片黑),最后, 这个</div><div class="line">*   函数还需要跟多测试, 如果存在bug, 请联系我修改~~  </div><div class="line">*/</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* RBGA透明叠加颜色计算方法</div><div class="line">*/</div><div class="line">ege::<span class="keyword">color_t</span> colorAlphaBlend(ege::<span class="keyword">color_t</span> colSrc, ege::<span class="keyword">color_t</span> colDst)&#123;</div><div class="line">    <span class="keyword">return</span> EGERGBA(</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_R(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_R(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_G(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_G(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( EGEGET_B(colSrc)*(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_B(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) ),</div><div class="line">        (<span class="keyword">int</span>)( <span class="number">255</span>             *(EGEGET_A(colSrc)/<span class="number">255.0</span>)+EGEGET_A(colDst)*(<span class="number">1</span>-EGEGET_A(colSrc)/<span class="number">255.0</span>) )</div><div class="line">    );</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* putiamge_withalpha</div><div class="line">* 参数:</div><div class="line">*   imgDst: 目标图像</div><div class="line">*   ingSrc: 源图像</div><div class="line">*   xDst,yDst: 在目标图像上绘制的起始点, 可以在图像外取点</div><div class="line">*   xSrc,ySrc,widthSrc,heightSrc, 源图像选区框, 四个参数形成一个矩形, 选区源图像的区域,选</div><div class="line">*      中部分为图像与矩形框相交部分</div><div class="line">*/</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">putimage_withalpha2</span><span class="params">(ege::PIMAGE imgDst, ege::PIMAGE imgSrc, <span class="keyword">int</span> xDst, <span class="keyword">int</span> yDst, <span class="keyword">int</span> xSrc = <span class="number">0</span>, <span class="keyword">int</span> ySrc = <span class="number">0</span>, <span class="keyword">int</span> widthSrc =<span class="number">0</span>, <span class="keyword">int</span> heightSrc = <span class="number">0</span>)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(imgDst == <span class="literal">NULL</span>)&#123;</div><div class="line">        ege::putimage_withalpha(<span class="literal">NULL</span>,imgSrc,xDst,yDst,xSrc,ySrc,widthSrc,heightSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(widthSrc==<span class="number">0</span>)&#123;</div><div class="line">        widthSrc = ege::getwidth(imgSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(heightSrc == <span class="number">0</span>)&#123;</div><div class="line">        heightSrc = ege::getheight(imgSrc);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> widthDst = ege::getwidth(imgDst);</div><div class="line">    <span class="keyword">int</span> heightDst = ege::getheight(imgDst);</div><div class="line">    <span class="comment">//矩形选框与源图形矩形相交 得出选中源矩形</span></div><div class="line">    xSrc = max(<span class="number">0</span>,xSrc);</div><div class="line">    ySrc = max(<span class="number">0</span>,ySrc);</div><div class="line">    widthSrc = min(ege::getwidth(imgSrc) , widthSrc ) - xSrc;</div><div class="line">    heightSrc= min(ege::getheight(imgSrc), heightSrc) - ySrc;</div><div class="line">    <span class="keyword">if</span>(widthSrc&lt;=<span class="number">0</span> || heightSrc&lt;=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//cout &lt;&lt; "源矩形" &lt;&lt; xSrc &lt;&lt; " " &lt;&lt; ySrc &lt;&lt;" " &lt;&lt; widthSrc &lt;&lt; " " &lt;&lt; heightSrc  &lt;&lt; endl;</span></div><div class="line">    <span class="comment">//将该矩形平移到目标矩形xDst yDst处 并求相交矩形在dst上的坐标信息</span></div><div class="line">    <span class="keyword">int</span> x = max(<span class="number">0</span>,xDst);</div><div class="line">    <span class="keyword">int</span> y = max(<span class="number">0</span>,yDst);</div><div class="line">    <span class="keyword">int</span> width = min(widthDst ,xDst+widthSrc )-x;</div><div class="line">    <span class="keyword">int</span> height= min(heightDst,yDst+heightSrc)-y;</div><div class="line">    <span class="keyword">if</span>(width&lt;=<span class="number">0</span>||height&lt;=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-2</span>;</div><div class="line">    &#125;</div><div class="line">   <span class="comment">// cout &lt;&lt; "绘制矩形" &lt;&lt; x &lt;&lt; " " &lt;&lt; y &lt;&lt;" " &lt;&lt; width &lt;&lt; " " &lt;&lt; height  &lt;&lt; endl;</span></div><div class="line">    <span class="comment">// 得出目标矩形之后 开始运算颜色信息</span></div><div class="line">    ege::<span class="keyword">color_t</span> * srcbuf = ege::getbuffer(imgSrc) + (ege::getwidth(imgSrc)*ySrc+xSrc);</div><div class="line">    ege::<span class="keyword">color_t</span> * dstbuf = ege::getbuffer(imgDst) + (ege::getwidth(imgDst)*y+x);</div><div class="line">    <span class="keyword">int</span> increaseSrc = ege::getwidth(imgSrc);</div><div class="line">    <span class="keyword">int</span> increaseDst = ege::getwidth(imgDst);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; height; i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; width; j++)&#123;</div><div class="line">            ege::<span class="keyword">color_t</span> src = *(srcbuf+j);</div><div class="line">            ege::<span class="keyword">color_t</span> dst = *(dstbuf+j);</div><div class="line">            *(dstbuf+j) =  colorAlphaBlend(src,dst);</div><div class="line">        &#125;</div><div class="line">        srcbuf += increaseSrc;</div><div class="line">        dstbuf += increaseDst;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/01/26/设计模式之观察者模式示例代码-气象站/" itemprop="url">
                   设计模式之观察者模式示例代码:气象站
                 </a>
@@ -1351,129 +1483,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/18/广度优先搜索-BFS-二-OJ实战-POJ1753上/" itemprop="url">
-                  广度优先搜索(BFS)(二) OJ实战:POJ1753(上)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-18T11:21:43+08:00" content="2016-08-18">
-              2016-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/算法-ACM/" itemprop="url" rel="index">
-                    <span itemprop="name">算法/ACM</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/18/广度优先搜索-BFS-二-OJ实战-POJ1753上/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/18/广度优先搜索-BFS-二-OJ实战-POJ1753上/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上次说到BFS的基本概念,本次就来一道OJ来试试手,选取的题目是POJ1753,毕竟菜鸟,解决这个问题一边看人家的解题一边又花了许多时间自己思考,总算是AC了.</p>
-<h2 id="原题再现"><a href="#原题再现" class="headerlink" title="原题再现"></a>原题再现</h2><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>Flip game is played on a rectangular 4x4 field with two-sided pieces placed on each of its 16 squares.
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/18/广度优先搜索-BFS-二-OJ实战-POJ1753上/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1519,7 +1528,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1527,7 +1536,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1536,7 +1545,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
