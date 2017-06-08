@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.smalldy.xyz/2017/06/08/Qt%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%8F%9C%E5%8D%95%E6%A0%8F%E5%92%8C%E5%B7%A5%E5%85%B7%E6%A0%8F/</loc>
+    <lastmod>2017-06-08T04:12:46.855Z</lastmod>
+    <data>
+        <display>
+        <title>Qt如何添加菜单栏和工具栏</title>
+        <pubTime>2017-06-08T03:33:51.000Z</pubTime>
+        
+        <tag>Qt</tag>
+         
+        <tag>菜单栏 工具栏</tag>
+         
+         
+           
+             
+              <breadCrumb title="QT" url="http://blog.smalldy.xyz/categories/QT/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.smalldy.xyz/2017/02/21/3%E5%88%86%E9%92%9FopenGL%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2017-02-21T11:32:07.800Z</lastmod>
     <data>
@@ -89,36 +111,6 @@
            
              
               <breadCrumb title="碎碎念, 碎碎念~" url="http://blog.smalldy.xyz/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5-%E7%A2%8E%E7%A2%8E%E5%BF%B5/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.smalldy.xyz/2016/10/23/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2016-10-24T02:25:47.683Z</lastmod>
-    <data>
-        <display>
-        <title>一个简单词法分析器的实现</title>
-        <pubTime>2016-10-23T15:32:01.000Z</pubTime>
-        
-        <tag>词法分析器</tag>
-         
-        <tag>c++</tag>
-         
-        <tag>状态转换</tag>
-         
-        <tag>状态驱动</tag>
-         
-        <tag>自动机</tag>
-         
-        <tag>编译原理</tag>
-         
-         
-           
-             
-              <breadCrumb title="编译原理" url="http://blog.smalldy.xyz/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
           
         </display>
     </data>

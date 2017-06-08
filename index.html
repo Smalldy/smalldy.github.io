@@ -267,6 +267,133 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/08/Qt如何添加菜单栏和工具栏/" itemprop="url">
+                  Qt如何添加菜单栏和工具栏
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-08T11:33:51+08:00" content="2017-06-08">
+              2017-06-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/08/Qt如何添加菜单栏和工具栏/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/08/Qt如何添加菜单栏和工具栏/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">setWindowTitle(<span class="string">"Main Window"</span>);</div><div class="line"><span class="comment">// 在堆上创建一个QAction对象, 第一个参数是资源路径 第二个参数是名称 &amp;代表会有一个快捷键</span></div><div class="line">openAction  = <span class="keyword">new</span> QAction(QIcon(<span class="string">":/image/docOpen"</span>),tr(<span class="string">"&amp;Open..."</span>),<span class="keyword">this</span>);</div><div class="line"><span class="comment">// 内置快捷键列表 Open 是ctrl+O</span></div><div class="line">openAction-&gt;setShortcuts(QKeySequence::Open);</div><div class="line"><span class="comment">// 设置下方statusBar的提示文本</span></div><div class="line">openAction-&gt;setStatusTip(tr(<span class="string">"Open existing file"</span>));</div><div class="line">connect(openAction,&amp;QAction::triggered,<span class="keyword">this</span>,&amp;MainWindow::open);</div><div class="line"><span class="comment">// 返回主窗口的菜单栏 如果不存在就会创建一个菜单栏</span></div><div class="line">QMenu *file = menuBar()-&gt;addMenu(tr(<span class="string">"&amp;File"</span>));</div><div class="line">file-&gt;addAction(openAction);</div><div class="line"></div><div class="line">QToolBar *toolBar = addToolBar(tr(<span class="string">"&amp;File"</span>));</div><div class="line">toolBar-&gt;addAction(openAction);</div><div class="line"></div><div class="line">statusBar();</div></pre></td></tr></table></figure>
+<ol>
+<li>在堆上创建一个QAction对象,指定资源路径和要显示的文本,指明父对象(非继承意义的父对象,而是要显示的那个窗口)</li>
+<li>设置快捷键</li>
+<li>设置statusBar提示文本</li>
+<li>使用connect函数设置信号槽</li>
+<li>获取menuBar对象指针,调用addMenu成员函数, 添加一个菜单项目,并使用addAction成员函数, 参数是刚刚创建的QAction ,toolBar同理</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/02/21/3分钟openGL环境搭建/" itemprop="url">
                   3分钟openGL环境搭建
                 </a>
@@ -723,125 +850,6 @@
               阅读全文 &raquo;
             </a>
           </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/23/一个简单词法分析器的实现/" itemprop="url">
-                  一个简单词法分析器的实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-23T23:32:01+08:00" content="2016-10-23">
-              2016-10-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/编译原理/" itemprop="url" rel="index">
-                    <span itemprop="name">编译原理</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/23/一个简单词法分析器的实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/23/一个简单词法分析器的实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
         
       
     </div>
@@ -1548,7 +1556,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -86,25 +86,17 @@
 
 
 
-<meta name="description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求  
-2. 前提前提: 
-    1.拥有github账号,掌握github最基本的操作  
-    2.有命令行工具cmd或者gitBash(推荐)">
+<meta name="description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求   2. 前提前提:      1.拥有github账号,掌握github最基本的操作       2.有命令行工具cmd或者gitBash(推荐)">
+<meta name="keywords" content="hexo,github,博客">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo + github 搭建博客">
 <meta property="og:url" content="http://blog.smalldy.xyz/2016/08/09/hexo-github-搭建博客/index.html">
 <meta property="og:site_name" content="Smalldy 's blog">
-<meta property="og:description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求  
-2. 前提前提: 
-    1.拥有github账号,掌握github最基本的操作  
-    2.有命令行工具cmd或者gitBash(推荐)">
+<meta property="og:description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求   2. 前提前提:      1.拥有github账号,掌握github最基本的操作       2.有命令行工具cmd或者gitBash(推荐)">
 <meta property="og:updated_time" content="2016-08-18T07:24:04.548Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo + github 搭建博客">
-<meta name="twitter:description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求  
-2. 前提前提: 
-    1.拥有github账号,掌握github最基本的操作  
-    2.有命令行工具cmd或者gitBash(推荐)">
+<meta name="twitter:description" content="前言1. 目标使用hexo和github搭建一个简易的博客,满足基本需求   2. 前提前提:      1.拥有github账号,掌握github最基本的操作       2.有命令行工具cmd或者gitBash(推荐)">
 
 
 
@@ -505,7 +497,7 @@ deploy:
 </code></pre><p>修改如下:</p>
 </li>
 </ol>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span> </div><div class="line"><span class="attr">  type:</span> git</div><div class="line"><span class="attr">  repository:</span> http://github.com/huangjunhui/huangjunhui.github.io.git</div><div class="line"><span class="attr">  branch:</span> master</div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">deploy:</span> </div><div class="line"><span class="attr">  type:</span> <span class="string">git</span></div><div class="line"><span class="attr">  repository:</span> <span class="attr">http://github.com/huangjunhui/huangjunhui.github.io.git</span></div><div class="line"><span class="attr">  branch:</span> <span class="string">master</span></div></pre></td></tr></table></figure>
 <p><strong>注意: yml语法很严格,修改配置项的时候一定要注意每一个冒号后边都有一个空格!</strong><br><strong>配置项中的<code>repository:</code>后的地址,是创建仓库后得到的https:地址,但在这里写成http就可以</strong></p>
 <ol>
 <li>博客目录下打开gitbash,输入命令<code>hexo g</code>,生成静态网页文件,<code>hexo s</code>预览一下当前博客的效果,满意的话<code>hexo d</code> 部署到github</li>
@@ -560,13 +552,13 @@ deploy:
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/08/09/图床(一)使用百度云作免费图床/" rel="next" title="图床(一):使用百度云作免费图床">
+                <i class="fa fa-chevron-left"></i> 图床(一):使用百度云作免费图床
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/09/图床(一)使用百度云作免费图床/" rel="prev" title="图床(一):使用百度云作免费图床">
-                图床(一):使用百度云作免费图床 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -674,7 +666,7 @@ deploy:
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
