@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.smalldy.xyz/2017/09/20/JAVA%E5%AE%8C%E5%85%A8%E5%A4%8D%E4%B9%A0/</loc>
+    
+    <lastmod>2017-09-20T03:53:39.917Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.smalldy.xyz/2017/06/08/Qt%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%8F%9C%E5%8D%95%E6%A0%8F%E5%92%8C%E5%B7%A5%E5%85%B7%E6%A0%8F/</loc>
     
     <lastmod>2017-06-08T04:12:46.855Z</lastmod>
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://blog.smalldy.xyz/about/css/style.css</loc>
+    <loc>http://blog.smalldy.xyz/about/js/prefixfree.min.js</loc>
     
     <lastmod>2016-08-19T22:59:20.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.smalldy.xyz/about/js/prefixfree.min.js</loc>
+    <loc>http://blog.smalldy.xyz/about/css/style.css</loc>
     
     <lastmod>2016-08-19T22:59:20.000Z</lastmod>
     
