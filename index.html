@@ -336,9 +336,17 @@
 
       
         
-          
-            
-          
+          <h2 id="0x0000"><a href="#0x0000" class="headerlink" title="0x0000"></a>0x0000</h2><p>以前学习过JAVA, 由于许久不动, 许多知识已经淡忘, 并且第一次并没有经过系统的学习,导致了许多方面都出现了知识漏洞, 因此再次学习JAVA, 并在此留下脚印.</p>
+<h2 id="STEP-1"><a href="#STEP-1" class="headerlink" title="STEP 1"></a>STEP 1</h2><h3 id="1-关于整型常量的默认类型"><a href="#1-关于整型常量的默认类型" class="headerlink" title="1.  关于整型常量的默认类型"></a>1.  关于整型常量的默认类型</h3><p>在JAVA中,整型常量默认的类型是 <code>int</code> ,理论上说 <code>byte b = 100</code> 这种表达式是有问题的,但是JAVA对这种情况进行了特殊处理,<br>如果数据大小没有超过 <code>byte</code>/<code>short</code>/<code>char</code> 的表示范围,则自动进行类型转换.</p>
+<p>同样由于默认的整型常量是int类型的,因此声明 long 变量注意一点,<br><code>long a = 10000000000</code>(此数据大于 <code>int</code> 的最大值)<br>会导致报错,正确的方式是在<code>10000000000</code>后边加上一个L,则不会引发报错<br><code>long a = 10000000000L;</code></p>
+<h3 id="2-关于浮点类型"><a href="#2-关于浮点类型" class="headerlink" title="2. 关于浮点类型"></a>2. 关于浮点类型</h3><p>浮点数常量默认的类型为 <code>double</code> 类型<br><code>float a = 1.23;</code><br>将会产生报错,因此需要:<br><code>float a = 1.23f;</code></p>
+<p>支持科学计数法 12e3表示12乘以10的3次方 12000</p>
+<p>值得思考的问题:<br>    float 类型占4个字节, long 类型占8个字节,为什么 float 表示的范围要比 long 大?<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/09/20/JAVA完全复习/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

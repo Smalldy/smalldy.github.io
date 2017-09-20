@@ -86,14 +86,17 @@
 
 
 
+<meta name="description" content="0x0000以前学习过JAVA, 由于许久不动, 许多知识已经淡忘, 并且第一次并没有经过系统的学习,导致了许多方面都出现了知识漏洞, 因此再次学习JAVA, 并在此留下脚印. STEP 11.  关于整型常量的默认类型在JAVA中,整型常量默认的类型是 int ,理论上说 byte b = 100 这种表达式是有问题的,但是JAVA对这种情况进行了特殊处理,如果数据大小没有超过 byte/sho">
 <meta name="keywords" content="JAVA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA完全复习">
 <meta property="og:url" content="http://blog.smalldy.xyz/2017/09/20/JAVA完全复习/index.html">
 <meta property="og:site_name" content="Smalldy 's blog">
-<meta property="og:updated_time" content="2017-09-20T03:53:39.917Z">
+<meta property="og:description" content="0x0000以前学习过JAVA, 由于许久不动, 许多知识已经淡忘, 并且第一次并没有经过系统的学习,导致了许多方面都出现了知识漏洞, 因此再次学习JAVA, 并在此留下脚印. STEP 11.  关于整型常量的默认类型在JAVA中,整型常量默认的类型是 int ,理论上说 byte b = 100 这种表达式是有问题的,但是JAVA对这种情况进行了特殊处理,如果数据大小没有超过 byte/sho">
+<meta property="og:updated_time" content="2017-09-20T04:12:15.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA完全复习">
+<meta name="twitter:description" content="0x0000以前学习过JAVA, 由于许久不动, 许多知识已经淡忘, 并且第一次并没有经过系统的学习,导致了许多方面都出现了知识漏洞, 因此再次学习JAVA, 并在此留下脚印. STEP 11.  关于整型常量的默认类型在JAVA中,整型常量默认的类型是 int ,理论上说 byte b = 100 这种表达式是有问题的,但是JAVA对这种情况进行了特殊处理,如果数据大小没有超过 byte/sho">
 
 
 
@@ -332,7 +335,41 @@
       
 
       
-        
+        <h2 id="0x0000"><a href="#0x0000" class="headerlink" title="0x0000"></a>0x0000</h2><p>以前学习过JAVA, 由于许久不动, 许多知识已经淡忘, 并且第一次并没有经过系统的学习,导致了许多方面都出现了知识漏洞, 因此再次学习JAVA, 并在此留下脚印.</p>
+<h2 id="STEP-1"><a href="#STEP-1" class="headerlink" title="STEP 1"></a>STEP 1</h2><h3 id="1-关于整型常量的默认类型"><a href="#1-关于整型常量的默认类型" class="headerlink" title="1.  关于整型常量的默认类型"></a>1.  关于整型常量的默认类型</h3><p>在JAVA中,整型常量默认的类型是 <code>int</code> ,理论上说 <code>byte b = 100</code> 这种表达式是有问题的,但是JAVA对这种情况进行了特殊处理,<br>如果数据大小没有超过 <code>byte</code>/<code>short</code>/<code>char</code> 的表示范围,则自动进行类型转换.</p>
+<p>同样由于默认的整型常量是int类型的,因此声明 long 变量注意一点,<br><code>long a = 10000000000</code>(此数据大于 <code>int</code> 的最大值)<br>会导致报错,正确的方式是在<code>10000000000</code>后边加上一个L,则不会引发报错<br><code>long a = 10000000000L;</code></p>
+<h3 id="2-关于浮点类型"><a href="#2-关于浮点类型" class="headerlink" title="2. 关于浮点类型"></a>2. 关于浮点类型</h3><p>浮点数常量默认的类型为 <code>double</code> 类型<br><code>float a = 1.23;</code><br>将会产生报错,因此需要:<br><code>float a = 1.23f;</code></p>
+<p>支持科学计数法 12e3表示12乘以10的3次方 12000</p>
+<p>值得思考的问题:<br>    float 类型占4个字节, long 类型占8个字节,为什么 float 表示的范围要比 long 大?<br><a id="more"></a></p>
+<h3 id="3-关于大数与高精度小数"><a href="#3-关于大数与高精度小数" class="headerlink" title="3. 关于大数与高精度小数"></a>3. 关于大数与高精度小数</h3><p>了解两个类:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">BigDecmal</div><div class="line">BigInteger</div></pre></td></tr></table></figure></p>
+<h3 id="4-关于字符类型"><a href="#4-关于字符类型" class="headerlink" title="4. 关于字符类型"></a>4. 关于字符类型</h3><p><code>char</code> 内部存储的Unicode类型的字符数据</p>
+<h3 id="5-成员变量和局部变量初始化问题"><a href="#5-成员变量和局部变量初始化问题" class="headerlink" title="5. 成员变量和局部变量初始化问题"></a>5. 成员变量和局部变量初始化问题</h3><p>成员变量系统会自动给一个初始值,但是(方法内)的局部变量则不会自动初始化,所以局部变量要想使用必须</p>
+<h3 id="6-基本内存分析"><a href="#6-基本内存分析" class="headerlink" title="6. 基本内存分析"></a>6. 基本内存分析</h3><p>栈区是一个自动分配的连续内存区域<br>栈内可以放置: 局部变量</p>
+<p>堆则不是连续的<br>堆可以放置:   new 出的对象<br>在堆内还有一个方法区,在方法区中存放的是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">类的代码信息</div><div class="line">static 变量</div><div class="line">常量池(例如字符串常量存之于内)</div></pre></td></tr></table></figure></p>
+<p>对于代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Student s = new Student();</div></pre></td></tr></table></figure></p>
+<p>JVM首先在方法区寻找Student类的信息,如果能在方法区中加载了类的信息,则不再进行加载动作.如果未能寻找到该类,那么在 CLASS_PATH 中寻找该类, 如果在 CLASS_PATH 中可以寻找到类,则进行加载,否则 class not found.</p>
+<p>类的加载是由类加载器(Class Loader)加载的.加载完成后,在方法区中就存在了该class的信息</p>
+<p>在此之后,将局部变量s压入栈中,调用构造器,在堆中创建一个Student对象, 这个对象的方法指向了方法区中的对象的代码所在的位置.也就是说用方法的地址代替原方法的位置.</p>
+<p>此时将构造完成的对象地址赋值给s</p>
+<p>常量池是共享的,这也就意味着,同样的常量的地址也是一样的</p>
+<h3 id="7-垃圾回收机制"><a href="#7-垃圾回收机制" class="headerlink" title="7. 垃圾回收机制"></a>7. 垃圾回收机制</h3><p>调用gc()函数不能直接调用垃圾回收的过程, 只是提供一个请求,该请求是否能够达成,取决于垃圾回收机制.</p>
+<h3 id="8-JAVA的构造方法-构造器"><a href="#8-JAVA的构造方法-构造器" class="headerlink" title="8. JAVA的构造方法/构造器"></a>8. JAVA的构造方法/构造器</h3><p>构造方法用于构造类的实例,构造方法地位特殊:</p>
+<ul>
+<li>构造方法通过 new 关键字调用</li>
+<li>构造方法不需要也不能有返回值(因此也不需要 return 语句)</li>
+<li>构造方法的名称必须和类名完全一致</li>
+<li>如果没有构造方法,编译器会自动添加一个无参的,空的构造方法,如果添加了构造方法,编译器就不会自动添加任何构造方法.</li>
+</ul>
+<p>构造方法一般用来初始化对象的各个属性</p>
+<h3 id="9-static"><a href="#9-static" class="headerlink" title="9. static"></a>9. static</h3><p>对象的创建和 <code>static</code> 属性 是无关的,这在 [6. 基本内存分析] 中提到过, 类中的 static 变量将会存储在方法区中,是和类存放在一起的(而不是和对象),因此可以使用 类名.static属性<br>来访问静态成员变量.</p>
+<figure class="highlight plain"><figcaption><span>成员方法不能访问 ```非static``` 属性或者方法.      </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 10. 关于继承时的构造器行为</div><div class="line">有如下代码:</div></pre></td></tr></table></figure>
+<p>class A{<br>    A(){<br>        System.out.println(“A 的构造函数正在执行!”);<br>    }<br>    void action(){<br>        System.out.println(“A 的对象 正在活动!”);<br>    }<br>}<br>class B extends A{<br>    B(){//子类的构造器中, 会隐式的调用super(); 你也可以选择显式的调用super<br>        //int a = 1; 如果super(); 不是第一条语句 将会引发错误,因此,这是一条强制性的规定<br>        //必须显式或者隐式的在第一行调用super();<br>        //super();//这也就是为什么,构造B的时候会执行A的构造器<br>        System.out.println(“B 的构造函数正在执行!”);<br>    }<br>}<br>public class HelloWorld {</p>
+<pre><code>public static void main(String[] args) {
+    // TODO Auto-generated method stub
+    B b = new B();
+}
+</code></pre><p>}<br>```</p>
+
       
     </div>
 
@@ -535,7 +572,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x0000"><span class="nav-number">1.</span> <span class="nav-text">0x0000</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-1"><span class="nav-number">2.</span> <span class="nav-text">STEP 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-关于整型常量的默认类型"><span class="nav-number">2.1.</span> <span class="nav-text">1.  关于整型常量的默认类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-关于浮点类型"><span class="nav-number">2.2.</span> <span class="nav-text">2. 关于浮点类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-关于大数与高精度小数"><span class="nav-number">2.3.</span> <span class="nav-text">3. 关于大数与高精度小数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-关于字符类型"><span class="nav-number">2.4.</span> <span class="nav-text">4. 关于字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-成员变量和局部变量初始化问题"><span class="nav-number">2.5.</span> <span class="nav-text">5. 成员变量和局部变量初始化问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-基本内存分析"><span class="nav-number">2.6.</span> <span class="nav-text">6. 基本内存分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-垃圾回收机制"><span class="nav-number">2.7.</span> <span class="nav-text">7. 垃圾回收机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-JAVA的构造方法-构造器"><span class="nav-number">2.8.</span> <span class="nav-text">8. JAVA的构造方法/构造器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-static"><span class="nav-number">2.9.</span> <span class="nav-text">9. static</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
